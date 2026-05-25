@@ -5,9 +5,9 @@ import java.sql.SQLException;
 public class bd {
 
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/meu_banco";
-        String usuario = "seu_usuario";
-        String senha = "sua_senha";
+        String url = "jdbc:mysql://localhost:3306/locadora";
+        String usuario = "root";
+        String senha = "root";
 
         try {
             Connection conexao = DriverManager.getConnection(url, usuario, senha);
