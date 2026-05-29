@@ -1,23 +1,22 @@
 package Loja;
 
-import java.util.Scanner;
 import java.time.LocalDate;
 public abstract class Conta {
     private String nome;
     private String cpf;
-    private int hash_senha;
-    private LocalDate data_de_nascimento;
+    private int hashSenha;
+    private LocalDate dataDeNascimento;
     private boolean logado = false;
 
-    public Conta(String nome, String cpf, String senha, String data_de_nascimento) {
+    public Conta(String nome, String cpf, String senha, String dataDeNascimento) {
         this.nome = nome;
         this.cpf = cpf;
-        this.hash_senha = senha.hashCode();
-        this.data_de_nascimento = LocalDate.parse(data_de_nascimento);
+        this.hashSenha = senha.hashCode();
+        this.dataDeNascimento = LocalDate.parse(dataDeNascimento);
     }
 
     public void logar(String cpfLogin, String senhaLogin){
-        if (this.cpf.equals(cpfLogin) && this.hash_senha==senhaLogin.hashCode()){
+        if (this.cpf.equals(cpfLogin) && this.hashSenha==senhaLogin.hashCode()){
             logado = true;
             System.out.printf("Logado com sucesso! Seja bem-vindo [%s]\n", nome);
         }
@@ -29,12 +28,12 @@ public abstract class Conta {
         }
     }
 
-    public LocalDate getData_de_nascimento() {
-        return data_de_nascimento;
+    public LocalDate getDataDeNascimento() {
+        return dataDeNascimento;
     }
 
-    public void setData_de_nascimento(LocalDate data_de_nascimento) {
-        this.data_de_nascimento = data_de_nascimento;
+    public void setDataDeNascimento(LocalDate dataDeNascimento) {
+        this.dataDeNascimento = dataDeNascimento;
     }
 
     public String getNome() {

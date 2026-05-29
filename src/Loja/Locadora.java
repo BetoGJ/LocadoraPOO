@@ -11,14 +11,14 @@ public class Locadora {
     public Locadora(String nome) {
         this.nome = nome;
     }
-    public void addFilme(Filme filme_novo){
-        filmes.add(filme_novo);
+    public void addFilme(Filme filmeNovo){
+        filmes.add(filmeNovo);
     }
-    public void addCliente(Cliente cliente_novo){
-        clientes.add(cliente_novo);
+    public void addCliente(Cliente clienteNovo){
+        clientes.add(clienteNovo);
     }
-    public void addVendedor(Vendedor vendedor_novo){
-        vendedores.add(vendedor_novo);
+    public void addVendedor(Vendedor vendedorNovo){
+        vendedores.add(vendedorNovo);
     }
     private static Conta buscarConta(Vector<? extends Conta> contas, String cpf){
         for(Conta c : contas){
