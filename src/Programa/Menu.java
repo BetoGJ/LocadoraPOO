@@ -1,3 +1,5 @@
+package Programa;
+
 import java.util.Scanner;
 import Loja.Cliente;
 import Loja.Locadora;
@@ -40,5 +42,18 @@ public class Menu {
         scanOption();
         locadoraAtual.login(option);
     }
+    public static void menuCliente(Cliente clienteAtual){
+        reset();
+        addOption("Alugar filme");
+        addOption("Devolver filme");
+        addOption("Pagar / conferir multa");
+        scanOption();
+
+    }
+    public static void menuVendedor(Vendedor vendedorAtual){
+        reset();
+        addOption("Adicionar filme");
+    }
+
 
 }

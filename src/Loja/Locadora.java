@@ -1,7 +1,8 @@
 package Loja;
-
 import java.util.Scanner;
 import java.util.Vector;
+import Programa.Menu;
+
 public class Locadora {
     private String nome;
     private Vector<Filme> filmes = new Vector<>();
@@ -40,6 +41,8 @@ public class Locadora {
             System.out.print("Digite a senha: ");
             String senhaLogin = sc.nextLine();
             contaAtual.logar(cpfLogin, senhaLogin);
+            if (tipo==1) Menu.menuCliente((Cliente) contaAtual);
+            else if (tipo == 2) Menu.menuVendedor((Vendedor) contaAtual);
         }
         catch(NullPointerException e){
             System.out.println("Conta não encontrada!");
