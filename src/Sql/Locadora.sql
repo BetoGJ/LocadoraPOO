@@ -67,11 +67,11 @@ CREATE TABLE Multa (
 );
 
 CREATE ROLE 'Cargo_Vendedor';
-GRANT SELECT, INSERT ON locadora.Filme TO 'Cargo_Vendedor';
+GRANT SELECT, INSERT ON locadora.Loja.Filme TO 'Cargo_Vendedor';
 
 CREATE ROLE 'Cargo_Gerente';
-GRANT ALL ON locadora.Cliente TO 'Cargo_Gerente';
-GRANT ALL ON locadora.Vendedor TO 'Cargo_Gerente';
+GRANT ALL ON locadora.Loja.Cliente TO 'Cargo_Gerente';
+GRANT ALL ON locadora.Loja.Vendedor TO 'Cargo_Gerente';
 
 CREATE USER 'gerente'@'%' IDENTIFIED BY '1234';
 CREATE USER 'vendedor'@'%' IDENTIFIED BY '1234';

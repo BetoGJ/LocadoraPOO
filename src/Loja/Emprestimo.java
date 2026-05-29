@@ -1,3 +1,5 @@
+package Loja;
+
 import java.util.Date;
 
 public class Emprestimo {
