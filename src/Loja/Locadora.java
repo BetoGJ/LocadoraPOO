@@ -21,7 +21,7 @@ public class Locadora {
     public void addVendedor(Vendedor vendedorNovo){
         vendedores.add(vendedorNovo);
     }
-    private static Conta buscarConta(Vector<? extends Conta> contas, String cpf){
+    private Conta buscarConta(Vector<? extends Conta> contas, String cpf){
         for(Conta c : contas){
             if(c.getCpf().equals(cpf)){
                 return c;
@@ -30,6 +30,14 @@ public class Locadora {
         return null;
     }
 
+    public Vector<Vendedor> getVendedores(Vendedor acesso) {
+        if(acesso.isAdmin()) {
+            return vendedores;
+        }
+        else{
+            return null;
+        }
+    }
 
     public void login(int tipo){
         System.out.print("Digite o CPF: ");
