@@ -1,9 +1,8 @@
 package Loja;
 
-import java.util.Date;
 
 public class Cliente extends Conta {
-    private String nome;
-    private Date data_de_nascimento;
-    private String cidade;
+    public Cliente(String nome, String cpf, String senha, String data_de_nascimento) {
+        super(nome, cpf, senha, data_de_nascimento);
+    }
 }

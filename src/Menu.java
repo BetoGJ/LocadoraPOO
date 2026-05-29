@@ -1,8 +1,12 @@
 import java.util.Scanner;
+import Loja.Cliente;
+import Loja.Locadora;
+import Loja.Vendedor;
 
 public class Menu {
     private static int optionQuant = 0;
     private static Scanner sc = new Scanner(System.in);
+    private static int option;
     public static void  clear(){
         System.out.print("\033[H\033[2J");
         System.out.flush();
@@ -10,14 +14,31 @@ public class Menu {
     public static void  addOption(String option){
         System.out.printf("[%d] - %s\n", ++optionQuant, option);
     }
-    public static int  getOption(){
+    public static void scanOption(){
         System.out.print("Escolha uma opção: ");
-        int option=sc.nextInt();
-        return option;
+        option=sc.nextInt();
+        sc.nextLine();
+        if(option==0){
+            sc.close();
+            System.exit(0);
+        }
     }
-    public static void  reset(){
+
+    public static void reset(){
         clear();
         optionQuant = 0;
+        System.out.println("[0] Sair");
+    }
+    public static void start(){
+        reset();
+        Locadora locadoraAtual = new Locadora("Locafilmes");
+        locadoraAtual.addCliente(new Cliente("Cliente1",  "123", "senhasegura", "2000-03-02"));
+        locadoraAtual.addVendedor(new Vendedor("Vendedor1", "321", "senhasegura", "2000-03-02", 1900.00f));
+        System.out.println("Escolha um tipo de conta: ");
+        addOption("Cliente");
+        addOption("Vendedor");
+        scanOption();
+        locadoraAtual.login(option);
     }
 
 }
