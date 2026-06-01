@@ -18,12 +18,21 @@ public class Menu {
         System.out.printf("[%d] - %s\n", ++optionQuant, option);
     }
     public static void scanOption(){
-        System.out.print("Escolha uma opção: ");
-        option=sc.nextInt();
-        sc.nextLine();
-        if(option==0){
-            sc.close();
-            System.exit(0);
+        while(true) {
+            try {
+                System.out.print("Escolha uma opção: ");
+                option = sc.nextInt();
+                sc.nextLine();
+                if (option == 0) {
+                    sc.close();
+                    System.exit(0);
+                }
+                if(option>0 && option<optionQuant) break;
+                else System.out.println("Escolha uma opção válida!");
+            } catch (java.util.InputMismatchException e) {
+                System.out.println("Escolha uma opção válida!");
+                sc.nextLine();
+            }
         }
     }
 
