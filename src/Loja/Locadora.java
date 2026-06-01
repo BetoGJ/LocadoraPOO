@@ -50,12 +50,16 @@ public class Locadora {
                 System.out.print("Digite o nome: ");
                 String nomeNovo = sc.nextLine();
                 String cpfNovo = Menu.scanCPF();
+                while(buscarConta(clientes, cpfNovo)!=null){
+                    System.out.println("CPF já cadastrado!");
+                    cpfNovo = Menu.scanCPF();
+                }
                 System.out.print("Digite a senha: ");
                 String senhaNova = sc.nextLine();
                 String dataNova = Menu.scanDate();
-
                 Cliente clienteNovo = new Cliente(nomeNovo, cpfNovo, senhaNova, dataNova);
                 clientes.add(clienteNovo);
+
             }
             else{
                 break;
