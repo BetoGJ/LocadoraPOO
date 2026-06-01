@@ -14,6 +14,11 @@ public class Menu {
         System.out.print("\033[H\033[2J");
         System.out.flush();
     }
+
+    public static int getOption() {
+        return option;
+    }
+
     public static void  addOption(String option){
         System.out.printf("[%d] - %s\n", ++optionQuant, option);
     }
@@ -44,8 +49,8 @@ public class Menu {
     public static void start(){
         reset();
 
-        locadoraAtual.addCliente(new Cliente("Cliente1",  "123", "senhasegura", "2000-03-02"));
-        locadoraAtual.addVendedor(new Vendedor("Vendedor1", "321", "senhasegura", "2000-03-02", 1900.00f, true));
+        locadoraAtual.addCliente(new Cliente("Cliente1",  "123", "senhasegura", "02/03/2000"));
+        locadoraAtual.addVendedor(new Vendedor("Vendedor1", "321", "senhasegura", "04/04/2001", 1900.00f, true));
         System.out.println("Escolha um tipo de conta: ");
         addOption("Cliente");
         addOption("Vendedor");
@@ -68,7 +73,7 @@ public class Menu {
         if(vendedorAtual.isAdmin()){
             addOption("Adicionar vendedor");
             addOption("Remover vendedor");
-            addOption("Tornar vendedor admin");
+            addOption("Tornar vendedor admin / remover admin");
             System.out.print("Lista de vendedores: ");
             for(Vendedor v: locadoraAtual.getVendedores(vendedorAtual)){
                 System.out.println(v.getNome());

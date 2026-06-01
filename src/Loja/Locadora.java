@@ -3,6 +3,7 @@ import java.util.Scanner;
 import java.util.Vector;
 import Programa.Menu;
 
+
 public class Locadora {
     private String nome;
     private Vector<Filme> filmes = new Vector<>();
@@ -40,6 +41,29 @@ public class Locadora {
     }
 
     public void login(int tipo){
+        while(tipo==1){
+            Menu.reset();
+            Menu.addOption("Cadastro");
+            Menu.addOption("Login");
+            Menu.scanOption();
+            if(Menu.getOption()==1){
+                System.out.print("Digite o nome: ");
+                String nomeNovo = sc.nextLine();
+                System.out.print("Digite o CPF: ");
+                String cpfNovo = sc.nextLine();
+                System.out.print("Digite a senha: ");
+                String senhaNova = sc.nextLine();
+                System.out.print("Digite a data de nascimento (dd/mm/yyyy): ");
+                String dataNova = sc.nextLine();
+
+                // implementar checagem de valores válidos
+                Cliente clienteNovo = new Cliente(nomeNovo, cpfNovo, senhaNova, dataNova);
+                clientes.add(clienteNovo);
+            }
+            else{
+                break;
+            }
+        }
         System.out.print("Digite o CPF: ");
         String cpfLogin = sc.nextLine();
         Conta contaAtual=null;
