@@ -77,8 +77,8 @@ public class Menu {
     public static void start(){
         reset();
 
-        locadoraAtual.addCliente(new Cliente("Cliente1",  "123", "senhasegura", "02/03/2000"));
-        locadoraAtual.addVendedor(new Vendedor("Vendedor1", "321", "senhasegura", "04/04/2001", 1900.00f, true));
+        locadoraAtual.addCliente(new Cliente("Cliente1",  "123.123.123-12", "senhasegura", "02/03/2000"));
+        locadoraAtual.addVendedor(new Vendedor("Vendedor1", "321.321.321-32", "senhasegura", "04/04/2001", 1900.00f, true));
         System.out.println("Escolha um tipo de conta: ");
         addOption("Cliente");
         addOption("Vendedor");
