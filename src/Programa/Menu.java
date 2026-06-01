@@ -27,7 +27,7 @@ public class Menu {
                     sc.close();
                     System.exit(0);
                 }
-                if(option>0 && option<optionQuant) break;
+                if(option>0 && option<=optionQuant) break;
                 else System.out.println("Escolha uma opção válida!");
             } catch (java.util.InputMismatchException e) {
                 System.out.println("Escolha uma opção válida!");
@@ -50,6 +50,7 @@ public class Menu {
         addOption("Cliente");
         addOption("Vendedor");
         scanOption();
+        // menu de login fica em Locadora
         locadoraAtual.login(option);
     }
     public static void menuCliente(Cliente clienteAtual){

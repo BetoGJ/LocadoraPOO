@@ -43,18 +43,19 @@ public class Locadora {
         System.out.print("Digite o CPF: ");
         String cpfLogin = sc.nextLine();
         Conta contaAtual=null;
-        try {
-            if (tipo == 1) contaAtual = buscarConta(clientes, cpfLogin);
-            else if (tipo == 2) contaAtual = buscarConta(vendedores, cpfLogin);
-            System.out.print("Digite a senha: ");
-            String senhaLogin = sc.nextLine();
-            contaAtual.logar(cpfLogin, senhaLogin);
-            if (tipo==1) Menu.menuCliente((Cliente) contaAtual);
-            else if (tipo == 2) Menu.menuVendedor((Vendedor) contaAtual);
-        }
-        catch(NullPointerException e){
-            System.out.println("Conta não encontrada!");
-            login(tipo);
+        while(true) {
+            try {
+                if (tipo == 1) contaAtual = buscarConta(clientes, cpfLogin);
+                else if (tipo == 2) contaAtual = buscarConta(vendedores, cpfLogin);
+                System.out.print("Digite a senha: ");
+                String senhaLogin = sc.nextLine();
+                contaAtual.logar(cpfLogin, senhaLogin);
+                if (tipo == 1) Menu.menuCliente((Cliente) contaAtual);
+                else if (tipo == 2) Menu.menuVendedor((Vendedor) contaAtual);
+                break;
+            } catch (NullPointerException e) {
+                System.out.println("Conta não encontrada!");
+            }
         }
     }
 }
