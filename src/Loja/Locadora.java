@@ -49,14 +49,11 @@ public class Locadora {
             if(Menu.getOption()==1){
                 System.out.print("Digite o nome: ");
                 String nomeNovo = sc.nextLine();
-                System.out.print("Digite o CPF: ");
-                String cpfNovo = sc.nextLine();
+                String cpfNovo = Menu.scanCPF();
                 System.out.print("Digite a senha: ");
                 String senhaNova = sc.nextLine();
-                System.out.print("Digite a data de nascimento (dd/mm/yyyy): ");
-                String dataNova = sc.nextLine();
+                String dataNova = Menu.scanDate();
 
-                // implementar checagem de valores válidos
                 Cliente clienteNovo = new Cliente(nomeNovo, cpfNovo, senhaNova, dataNova);
                 clientes.add(clienteNovo);
             }
@@ -64,8 +61,7 @@ public class Locadora {
                 break;
             }
         }
-        System.out.print("Digite o CPF: ");
-        String cpfLogin = sc.nextLine();
+        String cpfLogin = Menu.scanCPF();
         Conta contaAtual=null;
         while(true) {
             try {

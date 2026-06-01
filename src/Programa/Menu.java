@@ -81,6 +81,33 @@ public class Menu {
         }
         scanOption();
     }
+    public static boolean isNumeric(String str) {
+        return str != null && str.matches("\\d+");
+    }
 
+    public static String scanCPF() {
+        while (true) {
+            System.out.print("Digite o CPF no formato (xxx.xxx.xxx-yy): ");
+            String scannedCPF = sc.nextLine();
+
+            if (scannedCPF.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
+                return scannedCPF;
+            }
+
+            System.out.println("CPF inválido.");
+        }
+    }
+    public static String scanDate() {
+        while (true) {
+            System.out.print("Digite a data no formato (dd/mm/aaaa): ");
+            String scannedDate = sc.nextLine();
+
+            if (scannedDate.matches("\\d{2}/\\d{2}/\\d{4}")) {
+                return scannedDate;
+            }
+
+            System.out.println("Data inválida.");
+        }
+    }
 
 }
