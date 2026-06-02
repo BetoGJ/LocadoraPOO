@@ -97,20 +97,55 @@ public class Menu {
 
         switch (option){
             case 1:
-                String filmePesquisa;
-                System.out.println("Filme disponíveis : ");
-                for(Filme filme : locadoraAtual.getFilmes()){
-                    System.out.println(filme.getTitulo());
-                }
-                System.out.println("Qual o título do filme que deverá ser alugado?");
-                filmePesquisa = sc.nextLine();
-                for(Filme filme : locadoraAtual.getFilmes()){
-                    if(filme.getTitulo().equals(filmePesquisa)){
-                        Emprestimo emprestimoPlaceholder = new Emprestimo();
-                        clienteAtual.addEmprestimo(emprestimoPlaceholder);
+                if(clienteAtual.getMultas() == null) {
+                    String filmePesquisa;
+                    System.out.println("Filme disponíveis : ");
+                    for (Filme filme : locadoraAtual.getFilmes()) {
+                        System.out.println(filme.getTitulo());
+                    }
+                    System.out.println("Qual o título do filme que deverá ser alugado?");
+                    filmePesquisa = sc.nextLine();
+                    for (Filme filme : locadoraAtual.getFilmes()) {
+                        if (filme.getTitulo().equals(filmePesquisa)) {
+                            Emprestimo emprestimoPlaceholder = new Emprestimo(locadoraAtual, filmePesquisa);
+                            clienteAtual.addEmprestimo(emprestimoPlaceholder);
+
+                        }
                     }
                 }
+                else{
+                    System.out.println("Existem multas não pagas!");
+                }
+                break;
+            case 2:
+                if(clienteAtual.getEmprestimos() != null){
+                    System.out.println("Qual filme você deseja devolver?");
+                    for(Emprestimo emprestimo : clienteAtual.getEmprestimos()){
+                        System.out.println("ID do emprestimo : " + emprestimo.getIdEmprestimo());
+                        System.out.println("Filme emprestado : " + emprestimo.getNomeFilme());
+                        System.out.println("Data do emprestimo : " + emprestimo.getIdEmprestimo());
+                        System.out.println("Data limite : " + emprestimo.getDevolucao());
+                    }
+                }
+                break;
 
+            case 3:
+                if (clienteAtual.getMultas() != null){
+                    System.out.println("As seguintes multas devem ser pagas antes de qualquer empréstimo :");
+                    for(Multa multas : clienteAtual.getMultas()){
+                        System.out.println("ID da multa : " + multas.getId());
+                        System.out.println("Valor da multa : " + multas.getValor());
+                        System.out.println("Data de inicio da multa : " + multas.getData());
+                    }
+                    System.out.println("Qual multa você deseja quitar?");
+                    int multaVerifica;
+                    multaVerifica = sc.nextInt();
+                    System.out.println("meu pix : 35992348448");
+
+                }
+                else{
+                    System.out.println("Sem despesas!");
+                }
         }
 
     }

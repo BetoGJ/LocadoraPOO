@@ -1,9 +1,23 @@
 package Loja;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Multa {
     private int id;
     private float valor;
-    private Date data;
+    private LocalDate data;
+
+    public int getId() {
+        return id;
+    }
+
+    public float getValor() {
+        return valor;
+    }
+
+    public LocalDate getData() {
+        return data;
+    }
+
+
 }
