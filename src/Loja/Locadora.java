@@ -1,5 +1,6 @@
 package Loja;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Scanner;
 import java.util.Vector;
 import Programa.Menu;
@@ -126,5 +127,32 @@ public class Locadora {
 
     public Vector<Filme> getFilmes() {
         return filmes;
+    }
+
+    public void verificaMultas() {
+        for (Cliente cliente : clientes) {
+
+            for (Emprestimo emp : cliente.getEmprestimos()) {
+
+                if (emp.getDevolvido() == null && LocalDate.now().isAfter(emp.getDevolucao())) {
+
+                    float valor = ChronoUnit.DAYS.between(emp.getDevolucao(), LocalDate.now());
+                    Multa multaExistente = null;
+
+                    for (Multa mul : cliente.getMultas()) {
+                        if (mul.getIdEmprestimo() == emp.getIdEmprestimo()) {
+                            multaExistente = mul;
+                            break;
+                        }
+                    }
+
+                    if (multaExistente != null) {
+                        multaExistente.setValor(valor);
+                    } else {
+                        cliente.addMulta(new Multa(emp.getIdEmprestimo(), valor, LocalDate.now()));
+                    }
+                }
+            }
+        }
     }
 }

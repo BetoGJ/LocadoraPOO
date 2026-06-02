@@ -137,7 +137,7 @@ public class Menu {
                     for(Multa multas : clienteAtual.getMultas()){
                         System.out.println("ID da multa : " + multas.getId());
                         System.out.println("Valor da multa : " + multas.getValor());
-                        System.out.println("Data de inicio da multa : " + multas.getData());
+                        System.out.println("Data de inicio da multa : " + multas.getDataDeInicio());
                     }
                     System.out.println("Qual multa você deseja quitar?");
                     int multaVerifica;

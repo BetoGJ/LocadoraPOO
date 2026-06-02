@@ -15,6 +15,10 @@ public class Cliente extends Conta {
         emprestimos.add(emprestimo);
     }
 
+    public void addMulta(Multa multa){
+        multas.add(multa);
+    }
+
     public Vector<Emprestimo> getEmprestimos() {
         return emprestimos;
     }
