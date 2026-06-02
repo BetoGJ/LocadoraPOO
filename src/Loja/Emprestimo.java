@@ -1,7 +1,6 @@
 package Loja;
 
 import java.time.LocalDate;
-import java.util.Date;
 
 public class Emprestimo {
     private static int idEmprestimo;

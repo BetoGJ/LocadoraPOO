@@ -1,6 +1,5 @@
 package Programa;
 
-import java.time.LocalDate;
 import java.util.Scanner;
 
 import Loja.*;
@@ -10,38 +9,57 @@ public class Menu {
     private static Scanner sc = new Scanner(System.in);
     private static int option;
     private static Locadora locadoraAtual = new Locadora("Locafilmes");
-    public static void  clear(){
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
+
+    public static void start(){
+        locadoraAtual.addCliente(new Cliente("Cliente1",  "123.123.123-12", "senhasegura", "02/03/2000"));
+        locadoraAtual.addVendedor(new Vendedor("Vendedor1", "321.321.321-32", "senhasegura", "04/04/2001", 1900.00f, true));
+
+        System.out.println("--Escolha um tipo de conta ou finalize--"); // ----------Colocar isso dentre de reset quando estiver na interfaçe para variar de Menu e Locadora
+
+        reset();
+        addOption("Cliente");
+        addOption("Vendedor");
+        verificarOption();
+
+        locadoraAtual.login(option);  // menu de login fica em Locadora
     }
 
-    public static int getOption() {
-        return option;
+    public static void reset(){ // ---------------Metodo tbm da interface
+        optionQuant = 0;
+        System.out.println("[0] - Sair");
     }
 
-    public static void  addOption(String option){
+    public static void addOption(String option){ // ------------Adicionar na interfaçe tbm
         System.out.printf("[%d] - %s\n", ++optionQuant, option);
     }
-    public static void scanOption(){
+
+    public static void verificarOption(){ // ---------------Colocar esse metodo numa interfaçe
         while(true) {
             try {
                 System.out.print("Escolha uma opção: ");
                 option = sc.nextInt();
                 sc.nextLine();
+
                 if (option == 0) {
                     sc.close();
                     System.exit(0);
                 }
-                if(option>0 && option<=optionQuant) break;
-                else System.out.println("Escolha uma opção válida!");
+                else if (option > 0 && option <= optionQuant) {
+                    System.out.println();
+                    break;
+                }
+                else {
+                    System.out.println("Escolha uma opção válida!");
+                }
             } catch (java.util.InputMismatchException e) {
-                System.out.println("Escolha uma opção válida!");
+                System.out.println("Espirito de porco detectado. Insira um valor inteiro (pelo menos)!");
                 sc.nextLine();
             }
         }
     }
+
     public static boolean isNumeric(String str) {
-        return str != null && str.matches("\\d+");
+        return str != null && str.matches("\\d+");     // Regex possibilitando um ou mais algarismos
     }
 
     public static String scanCPF() {
@@ -49,19 +67,20 @@ public class Menu {
             System.out.print("Digite o CPF no formato (xxx.xxx.xxx-yy): ");
             String scannedCPF = sc.nextLine();
 
-            if (scannedCPF.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) {
+            if (scannedCPF.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) { // Regex obrigando a sequência de 3 algarismos e ponto literal e hífen
                 return scannedCPF;
             }
 
             System.out.println("CPF inválido.");
         }
     }
-    public static String scanDate() {
+
+    public static String scanData() {
         while (true) {
-            System.out.print("Digite a data no formato (dd/mm/aaaa): ");
+            System.out.print("Digite a data no formato dd/mm/aaaa: ");
             String scannedDate = sc.nextLine();
 
-            if (scannedDate.matches("\\d{2}/\\d{2}/\\d{4}")) {
+            if (scannedDate.matches("\\d{2}/\\d{2}/\\d{4}")) { // Regex obrigando a sequência de 2 algarismos seguido por /
                 return scannedDate;
             }
 
@@ -69,29 +88,12 @@ public class Menu {
         }
     }
 
-    public static void reset(){
-        clear();
-        optionQuant = 0;
-        System.out.println("[0] Sair");
-    }
-    public static void start(){
-        reset();
-
-        locadoraAtual.addCliente(new Cliente("Cliente1",  "123.123.123-12", "senhasegura", "02/03/2000"));
-        locadoraAtual.addVendedor(new Vendedor("Vendedor1", "321.321.321-32", "senhasegura", "04/04/2001", 1900.00f, true));
-        System.out.println("Escolha um tipo de conta: ");
-        addOption("Cliente");
-        addOption("Vendedor");
-        scanOption();
-        // menu de login fica em Locadora
-        locadoraAtual.login(option);
-    }
     public static void menuCliente(Cliente clienteAtual){
         reset();
         addOption("Alugar filme");
         addOption("Devolver filme");
         addOption("Pagar / conferir multa");
-        scanOption();
+        verificarOption();
 
         switch (option){
             case 1:
@@ -112,6 +114,7 @@ public class Menu {
         }
 
     }
+
     public static void menuVendedor(Vendedor vendedorAtual){
         reset();
         addOption("Adicionar filme");
@@ -125,7 +128,7 @@ public class Menu {
                 System.out.println(v.getNome());
             }
         }
-        scanOption();
+        verificarOption();
 
         switch(option){
             case 1:
@@ -159,5 +162,7 @@ public class Menu {
         }
     }
 
-
+    public static int getOption() {
+        return option;
+    }
 }
