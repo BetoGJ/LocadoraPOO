@@ -16,6 +16,16 @@ public class Locadora {
     public void addFilme(Filme filmeNovo){
         filmes.add(filmeNovo);
     }
+    public void RemoveFilme(String titulo){
+        for(int i = 0; i < filmes.size(); i++){
+            if(filmes.get(i).getTitulo().equals(titulo)){
+                filmes.remove(i);
+                System.out.println("Filme removido!");
+                return;
+            }
+        }
+        System.out.println("Filme não encontrado!");
+    }
     public void addCliente(Cliente clienteNovo){
         clientes.add(clienteNovo);
     }
@@ -81,5 +91,9 @@ public class Locadora {
                 System.out.println("Conta não encontrada!");
             }
         }
+    }
+
+    public Vector<Filme> getFilmes() {
+        return filmes;
     }
 }

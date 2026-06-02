@@ -1,9 +1,9 @@
 package Programa;
 
+import java.time.LocalDate;
 import java.util.Scanner;
-import Loja.Cliente;
-import Loja.Locadora;
-import Loja.Vendedor;
+
+import Loja.*;
 
 public class Menu {
     private static int optionQuant = 0;
@@ -93,6 +93,24 @@ public class Menu {
         addOption("Pagar / conferir multa");
         scanOption();
 
+        switch (option){
+            case 1:
+                String filmePesquisa;
+                System.out.println("Filme disponíveis : ");
+                for(Filme filme : locadoraAtual.getFilmes()){
+                    System.out.println(filme.getTitulo());
+                }
+                System.out.println("Qual o título do filme que deverá ser alugado?");
+                filmePesquisa = sc.nextLine();
+                for(Filme filme : locadoraAtual.getFilmes()){
+                    if(filme.getTitulo().equals(filmePesquisa)){
+                        Emprestimo emprestimoPlaceholder = new Emprestimo();
+                        clienteAtual.addEmprestimo(emprestimoPlaceholder);
+                    }
+                }
+
+        }
+
     }
     public static void menuVendedor(Vendedor vendedorAtual){
         reset();
@@ -108,6 +126,37 @@ public class Menu {
             }
         }
         scanOption();
+
+        switch(option){
+            case 1:
+                String tituloPlaceholder;
+                String classificacaoPlaceholder;
+                String diretorPlaceholder;
+                int anoPlaceholder;
+                int quantidadePlaceholder;
+
+                System.out.println("Informe o título do filme : ");
+                tituloPlaceholder = sc.nextLine();
+                System.out.println("Informe a classificação do filme");
+                classificacaoPlaceholder = sc.nextLine();
+                System.out.println("Informe o diretor do filme");
+                diretorPlaceholder = sc.nextLine();
+                System.out.println("Informe o ano de lançamento do filme");
+                anoPlaceholder = sc.nextInt();
+                System.out.println("Informe a quantitade de cópias do filme");
+                quantidadePlaceholder = sc.nextInt();
+                Filme filme1 = new Filme(tituloPlaceholder,classificacaoPlaceholder,diretorPlaceholder,anoPlaceholder,quantidadePlaceholder,quantidadePlaceholder);
+                locadoraAtual.addFilme(filme1);
+                System.out.println("Filme : " + tituloPlaceholder + " Inserido!");
+                break;
+
+            case 2:
+                System.out.println("Informe o titulo do filme que você deseja remover");
+                tituloPlaceholder = sc.nextLine();
+                locadoraAtual.RemoveFilme(tituloPlaceholder);
+                break;
+
+        }
     }
 
 
