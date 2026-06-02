@@ -7,15 +7,14 @@ public abstract class Conta {
     private String nome;
     private String cpf;
     private int hashSenha;
-    private DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
     private LocalDate dataDeNascimento;
     private boolean logado = false;
 
-    public Conta(String nome, String cpf, String senha, String dataDeNascimento) {
+    public Conta(String nome, String cpf, String senha, LocalDate dataDeNascimento) {
         this.nome = nome;
         this.cpf = cpf;
         this.hashSenha = senha.hashCode();
-        this.dataDeNascimento = LocalDate.parse(dataDeNascimento, formatador);
+        this.dataDeNascimento = dataDeNascimento;
     }
 
     public void logar(String cpfLogin, String senhaLogin){

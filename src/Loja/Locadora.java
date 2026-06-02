@@ -1,4 +1,5 @@
 package Loja;
+import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.Vector;
 import Programa.Menu;
@@ -34,7 +35,7 @@ public class Locadora {
 
                 System.out.print("Digite a senha: ");
                 String senhaNova = sc.nextLine();
-                String dataNova = Menu.scanData();
+                LocalDate dataNova = Menu.scanData();
                 Cliente clienteNovo = new Cliente(nomeNovo, cpfNovo, senhaNova, dataNova);
                 clientes.add(clienteNovo);
             }

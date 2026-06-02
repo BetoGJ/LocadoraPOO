@@ -1,5 +1,7 @@
 package Programa;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 import Loja.*;
@@ -11,8 +13,8 @@ public class Menu {
     private static Locadora locadoraAtual = new Locadora("Locafilmes");
 
     public static void start(){
-        locadoraAtual.addCliente(new Cliente("Cliente1",  "123.123.123-12", "senhasegura", "02/03/2000"));
-        locadoraAtual.addVendedor(new Vendedor("Vendedor1", "321.321.321-32", "senhasegura", "04/04/2001", 1900.00f, true));
+        locadoraAtual.addCliente(new Cliente("Cliente1",  "123.123.123-12", "senhasegura",         LocalDate.parse("2000-03-02")));
+        locadoraAtual.addVendedor(new Vendedor("Vendedor1", "321.321.321-32", "senhasegura",         LocalDate.parse("2001-04-04"), 1900.00f, true));
 
         System.out.println("--Escolha um tipo de conta--"); // ----------Colocar isso dentre de reset quando estiver na interfaçe para variar de Menu e Locadora
 
@@ -75,16 +77,16 @@ public class Menu {
         }
     }
 
-    public static String scanData() {
+    public static LocalDate scanData() {
         while (true) {
-            System.out.print("Digite a data no formato dd/mm/aaaa: ");
-            String scannedDate = sc.nextLine();
+            System.out.print("Digite a data no formato AAAA-MM-DD: ");
 
-            if (scannedDate.matches("\\d{2}/\\d{2}/\\d{4}")) { // Regex obrigando a sequência de 2 algarismos seguido por /
-                return scannedDate;
+            try {
+                return LocalDate.parse(sc.nextLine());
+            } catch (DateTimeParseException e) {
+                System.out.println("Data inválida.");
             }
 
-            System.out.println("Data inválida.");
         }
     }
 

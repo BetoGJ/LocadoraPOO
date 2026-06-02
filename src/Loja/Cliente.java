@@ -1,12 +1,13 @@
 package Loja;
 
+import java.time.LocalDate;
 import java.util.Vector;
 
 public class Cliente extends Conta {
     private Vector<Emprestimo> emprestimos = new Vector<>();
     private Vector<Multa> multas = new Vector<>();
 
-    public Cliente(String nome, String cpf, String senha, String dataDeNascimento) {
+    public Cliente(String nome, String cpf, String senha, LocalDate dataDeNascimento) {
         super(nome, cpf, senha, dataDeNascimento);
     }
 
