@@ -97,7 +97,7 @@ public class Menu {
 
         switch (option){
             case 1:
-                if(clienteAtual.getMultas() == null) {
+                if(clienteAtual.getMultas().size() == 0) {
                     String filmePesquisa;
                     System.out.println("Filme disponíveis : ");
                     for (Filme filme : locadoraAtual.getFilmes()) {
@@ -118,7 +118,7 @@ public class Menu {
                 }
                 break;
             case 2:
-                if(clienteAtual.getEmprestimos() != null){
+                if(clienteAtual.getEmprestimos().size() != 0){
                     System.out.println("Qual filme você deseja devolver?");
                     for(Emprestimo emprestimo : clienteAtual.getEmprestimos()){
                         System.out.println("ID do emprestimo : " + emprestimo.getIdEmprestimo());
@@ -130,7 +130,7 @@ public class Menu {
                 break;
 
             case 3:
-                if (clienteAtual.getMultas() != null){
+                if (clienteAtual.getMultas().size() != 0){
                     System.out.println("As seguintes multas devem ser pagas antes de qualquer empréstimo :");
                     for(Multa multas : clienteAtual.getMultas()){
                         System.out.println("ID da multa : " + multas.getId());
