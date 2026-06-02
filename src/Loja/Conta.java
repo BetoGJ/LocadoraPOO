@@ -8,7 +8,6 @@ public abstract class Conta {
     private String cpf;
     private int hashSenha;
     private DateTimeFormatter formatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
     private LocalDate dataDeNascimento;
     private boolean logado = false;
 
@@ -20,12 +19,13 @@ public abstract class Conta {
     }
 
     public void logar(String cpfLogin, String senhaLogin){
-        if (this.cpf.equals(cpfLogin) && this.hashSenha==senhaLogin.hashCode()){
+        if (this.cpf.equals(cpfLogin) && this.hashSenha == senhaLogin.hashCode()){
             logado = true;
-            System.out.printf("Logado com sucesso! Seja bem-vindo [%s]\n", nome);
+            System.out.printf("\nLogado com sucesso! Seja bem-vindo [%s]\n", nome);
         }
         else System.out.println("Falha no login!");
     }
+
     public void deslogar(){
         if(logado==true){
             logado = false;
@@ -55,6 +55,7 @@ public abstract class Conta {
     public String getCpf() {
         return cpf;
     }
+
     public boolean isLogado(){
         return logado;
     }

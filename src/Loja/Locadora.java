@@ -41,10 +41,13 @@ public class Locadora {
             else{
                 break;
             }
+            System.out.println();
         }
 
+        System.out.println("--Insira os dados da conta--");
         String cpfLogin = Menu.scanCPF();
-        Conta contaAtual=null;
+        Conta contaAtual = null;
+        int tentativas = 0;
 
         while(true) {
             try {
@@ -57,17 +60,23 @@ public class Locadora {
 
                 System.out.print("Digite a senha: ");
                 String senhaLogin = sc.nextLine();
+
                 contaAtual.logar(cpfLogin, senhaLogin);
 
-                if (tipo == 1) {
+                if (tipo == 1 && contaAtual.isLogado()) {
                     Menu.menuCliente((Cliente) contaAtual);
                 }
-                else if (tipo == 2) {
+                else if (tipo == 2 && contaAtual.isLogado()) {
                     Menu.menuVendedor((Vendedor) contaAtual);
                 }
-                break;
             } catch (NullPointerException e) {
                 System.out.println("Conta não encontrada!");
+            }
+            tentativas++;
+
+            if (tentativas == 3) {
+                System.out.println("Você errou 3 vezes consecutivas. Recomeçe o processo\n");
+                Menu.start();
             }
         }
     }

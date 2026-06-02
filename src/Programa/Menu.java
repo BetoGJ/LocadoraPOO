@@ -14,7 +14,7 @@ public class Menu {
         locadoraAtual.addCliente(new Cliente("Cliente1",  "123.123.123-12", "senhasegura", "02/03/2000"));
         locadoraAtual.addVendedor(new Vendedor("Vendedor1", "321.321.321-32", "senhasegura", "04/04/2001", 1900.00f, true));
 
-        System.out.println("--Escolha um tipo de conta ou finalize--"); // ----------Colocar isso dentre de reset quando estiver na interfaçe para variar de Menu e Locadora
+        System.out.println("--Escolha um tipo de conta--"); // ----------Colocar isso dentre de reset quando estiver na interfaçe para variar de Menu e Locadora
 
         reset();
         addOption("Cliente");
@@ -97,7 +97,7 @@ public class Menu {
 
         switch (option){
             case 1:
-                if(clienteAtual.getMultas().size() == 0) {
+                if(clienteAtual.getMultas() == null) {
                     String filmePesquisa;
                     System.out.println("Filme disponíveis : ");
                     for (Filme filme : locadoraAtual.getFilmes()) {
@@ -118,7 +118,7 @@ public class Menu {
                 }
                 break;
             case 2:
-                if(clienteAtual.getEmprestimos().size() != 0){
+                if(clienteAtual.getEmprestimos() != null){
                     System.out.println("Qual filme você deseja devolver?");
                     for(Emprestimo emprestimo : clienteAtual.getEmprestimos()){
                         System.out.println("ID do emprestimo : " + emprestimo.getIdEmprestimo());
