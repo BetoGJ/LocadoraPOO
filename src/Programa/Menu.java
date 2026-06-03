@@ -1,21 +1,24 @@
 package Programa;
 
+import Loja.*;
+import Loja.Generos.FilmeAcao;
+import Loja.Generos.FilmeComedia;
+import Loja.Generos.FilmeSuspense;
+
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
+import java.util.InputMismatchException;
 import java.util.Scanner;
-
-import Loja.*;
 
 public class Menu {
     private static int optionQuant = 0;
-    private static Scanner sc = new Scanner(System.in);
     private static int option;
+    private static Scanner sc = new Scanner(System.in);
     private static Locadora locadoraAtual = new Locadora("Locafilmes");
 
     public static void start(){
-        locadoraAtual.addCliente(new Cliente("Cliente1",  "123.123.123-12", "senhasegura",         LocalDate.parse("2000-03-02")));
-        locadoraAtual.addVendedor(new Vendedor("Vendedor1", "321.321.321-32", "senhasegura",         LocalDate.parse("2001-04-04"), 1900.00f, true));
-
+        locadoraAtual.addCliente(new Cliente("Cliente1", "123.123.123-12", "senhasegura", LocalDate.parse("2000-03-02")));
+        locadoraAtual.addVendedor(new Vendedor("Vendedor1", "321.321.321-32", "senhasegura", LocalDate.parse("2001-04-04"), 1900.00f, true));
         System.out.println("--Escolha um tipo de conta--"); // ----------Colocar isso dentre de reset quando estiver na interfaçe para variar de Menu e Locadora
 
         reset();
@@ -28,7 +31,7 @@ public class Menu {
 
     public static void reset(){ // ---------------Metodo tbm da interface
         optionQuant = 0;
-        System.out.println("[0] - Sair");
+        System.out.println("[0] - Sair do Banco de Dados");
     }
 
     public static void addOption(String option){ // ------------Adicionar na interfaçe tbm
@@ -50,18 +53,14 @@ public class Menu {
                     System.out.println();
                     break;
                 }
-                else {
-                    System.out.println("Escolha uma opção válida!");
-                }
-            } catch (java.util.InputMismatchException e) {
+
+                System.out.println("Escolha uma opção válida!");
+
+            } catch (InputMismatchException e) {
                 System.out.println("Espirito de porco detectado. Insira um valor inteiro (pelo menos)!");
                 sc.nextLine();
             }
         }
-    }
-
-    public static boolean isNumeric(String str) {
-        return str != null && str.matches("\\d+");     // Regex possibilitando um ou mais algarismos
     }
 
     public static String scanCPF() {
@@ -79,9 +78,9 @@ public class Menu {
 
     public static LocalDate scanData() {
         while (true) {
-            System.out.print("Digite a data no formato AAAA-MM-DD: ");
 
             try {
+                System.out.print("Digite a data no formato AAAA-MM-DD: ");
                 return LocalDate.parse(sc.nextLine());
             } catch (DateTimeParseException e) {
                 System.out.println("Data inválida.");
@@ -99,12 +98,14 @@ public class Menu {
 
         switch (option){
             case 1:
-                if(clienteAtual.getMultas().size() == 0) {
+                if(clienteAtual.getMultas().isEmpty()) {
                     String filmePesquisa;
                     System.out.println("Filme disponíveis : ");
+
                     for (Filme filme : locadoraAtual.getFilmes()) {
                         System.out.println(filme.getTitulo());
                     }
+
                     System.out.println("Qual o título do filme que deverá ser alugado?");
                     filmePesquisa = sc.nextLine();
                     for (Filme filme : locadoraAtual.getFilmes()) {
@@ -153,50 +154,96 @@ public class Menu {
     }
 
     public static void menuVendedor(Vendedor vendedorAtual){
-        reset();
-        addOption("Adicionar filme");
-        addOption("Remover filme");
-        if(vendedorAtual.isAdmin()){
-            addOption("Adicionar vendedor");
-            addOption("Remover vendedor");
-            addOption("Tornar vendedor admin / remover admin");
-            System.out.print("Lista de vendedores: ");
-            for(Vendedor v: locadoraAtual.getVendedores(vendedorAtual)){
-                System.out.println(v.getNome());
+        while(true) {
+            reset();
+            addOption("Adicionar filme");
+            addOption("Remover filme");
+            if (vendedorAtual.isAdmin()) {
+                addOption("Adicionar vendedor");
+                addOption("Remover vendedor");
+                addOption("Tornar vendedor admin / remover admin");
+                System.out.print("Lista de vendedores: ");
+                for (Vendedor v : locadoraAtual.getVendedores(vendedorAtual)) {
+                    System.out.println(v.getNome());
+                }
+            }
+            verificarOption();
+
+            switch (option) {
+                case 1:
+                    adicionarFilme();
+                    break;
+                case 2:
+                    removerFilme();
+                    break;
+                default:
             }
         }
-        verificarOption();
+    }
 
-        switch(option){
-            case 1:
-                String tituloPlaceholder;
-                String classificacaoPlaceholder;
-                String diretorPlaceholder;
-                int anoPlaceholder;
-                int quantidadePlaceholder;
+    private static void adicionarFilme() {
+        try {
+            System.out.print("Título do filme: ");
+            String titulo = sc.nextLine();
 
-                System.out.println("Informe o título do filme : ");
-                tituloPlaceholder = sc.nextLine();
-                System.out.println("Informe a classificação do filme");
-                classificacaoPlaceholder = sc.nextLine();
-                System.out.println("Informe o diretor do filme");
-                diretorPlaceholder = sc.nextLine();
-                System.out.println("Informe o ano de lançamento do filme");
-                anoPlaceholder = sc.nextInt();
-                System.out.println("Informe a quantitade de cópias do filme");
-                quantidadePlaceholder = sc.nextInt();
-                Filme filme1 = new Filme(tituloPlaceholder,classificacaoPlaceholder,diretorPlaceholder,anoPlaceholder,quantidadePlaceholder,quantidadePlaceholder);
-                locadoraAtual.addFilme(filme1);
-                System.out.println("Filme : " + tituloPlaceholder + " Inserido!");
-                break;
+            if (titulo.isBlank()) {
+                System.out.println("Título inválido!");
+                return;
+            }
 
-            case 2:
-                System.out.println("Informe o titulo do filme que você deseja remover");
-                tituloPlaceholder = sc.nextLine();
-                locadoraAtual.RemoveFilme(tituloPlaceholder);
-                break;
+            System.out.print("Classificação do filme: ");
+            String classificacao = sc.nextLine();
 
+            System.out.print("Diretor do filme: ");
+            String diretor = sc.nextLine();
+
+            System.out.print("Gênero (acao, comedia, suspense): ");
+            String genero = sc.nextLine().toLowerCase();
+
+            System.out.print("Ano de lançamento do filme: ");
+            int ano = sc.nextInt();
+
+            System.out.print("Quantidade de cópias do filme: ");
+            int quantidade = sc.nextInt();
+            sc.nextLine();
+
+            Filme filme = null;
+
+            switch (genero) {
+                case "acao":
+                    filme = new FilmeAcao(titulo, classificacao, diretor, ano, quantidade, quantidade, genero);
+                    break;
+                case "comedia":
+                    filme = new FilmeComedia(titulo, classificacao, diretor, ano, quantidade, quantidade, genero);
+                    break;
+                case "suspense":
+                    filme = new FilmeSuspense(titulo, classificacao, diretor, ano, quantidade, quantidade, genero);
+                    break;
+                default:
+                    System.out.println("Gênero inválido!");
+                    return;
+            }
+
+            locadoraAtual.addFilme(filme);
+            System.out.println("Filme inserido com sucesso!");
+
+        } catch (InputMismatchException e) {
+            System.out.println("Ano e quantidade devem ser números!");
+            sc.nextLine();
         }
+    }
+
+    private static void removerFilme() {
+        System.out.print("Informe o título do filme: ");
+        String titulo = sc.nextLine();
+
+        if (titulo.isBlank()) {
+            System.out.println("Título inválido!");
+            return;
+        }
+
+        locadoraAtual.RemoveFilme(titulo);
+        System.out.println("Remoção concluída!");
     }
 
     public static int getOption() {
