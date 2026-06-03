@@ -134,6 +134,8 @@ public class Menu {
                 case 2:
                     locadoraAtual.RemoverFilme();
                     break;
+                case 3:
+                    locadoraAtual.addVendedor();
                 default:
             }
         }
