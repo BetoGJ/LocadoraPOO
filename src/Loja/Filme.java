@@ -1,6 +1,6 @@
 package Loja;
 
-public class Filme {
+public abstract class Filme {
     private String titulo;
     private String classificacao;
     private String diretor;

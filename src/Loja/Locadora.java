@@ -74,11 +74,13 @@ public class Locadora {
             } catch (NullPointerException e) {
                 System.out.println("Conta não encontrada!");
             }
+
             tentativas++;
 
             if (tentativas == 3) {
                 System.out.println("Você errou 3 vezes consecutivas. Recomeçe o processo\n");
                 Menu.start();
+                return;
             }
         }
     }

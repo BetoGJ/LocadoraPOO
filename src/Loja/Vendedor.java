@@ -10,9 +10,11 @@ public class Vendedor extends Conta{
         this.salario = salario;
         this.adminStatus = adminStatus;
     }
+
     public boolean isAdmin(){
         return adminStatus;
     }
+
     public void setAdmin(){
         adminStatus = true;
     }
