@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class Multa {
-    private static int numMulta;
+    private static int numMulta = 0;
     private int id;
     private int idEmprestimo;
     private float valor;
@@ -39,5 +39,6 @@ public class Multa {
         this.idEmprestimo = idEmprestimo;
         this.valor = ChronoUnit.DAYS.between(data, LocalDate.now());
         this.dataDeInicio = data;
+        numMulta++;
     }
 }

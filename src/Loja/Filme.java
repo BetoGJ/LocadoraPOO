@@ -1,6 +1,15 @@
 package Loja;
 
+import Loja.Generos.FilmeAcao;
+import Loja.Generos.FilmeComedia;
+import Loja.Generos.FilmeSuspense;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public abstract class Filme {
+    private static int numFilme = 0;
+    private int idFilme;
     private String titulo;
     private String classificacao;
     private String diretor;
@@ -9,12 +18,18 @@ public abstract class Filme {
     private int disponivel;
 
     public Filme(String titulo, String classificacao, String diretor, int anoLancamento, int quantidade, int disponivel) {
+        this.idFilme = numFilme;
+        numFilme++;
         this.titulo = titulo;
         this.classificacao = classificacao;
         this.diretor = diretor;
         this.anoLancamento = anoLancamento;
         this.quantidade = quantidade;
         this.disponivel = disponivel;
+    }
+
+    public int getIdFilme() {
+        return idFilme;
     }
 
     public String getTitulo() {
@@ -44,4 +59,7 @@ public abstract class Filme {
     public void setDisponivel(int disponivel) {
         this.disponivel = disponivel;
     }
+
+    public abstract void descricaoGenero();
+
 }

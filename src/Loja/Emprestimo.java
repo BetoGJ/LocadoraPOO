@@ -3,7 +3,7 @@ package Loja;
 import java.time.LocalDate;
 
 public class Emprestimo {
-    private static int numEmprestimo;
+    private static int numEmprestimo = 0;
     private int idEmprestimo;
     private LocalDate data;
     private LocalDate devolucao;
@@ -31,7 +31,7 @@ public class Emprestimo {
                 break;
             }
         }
-
+        numEmprestimo++;
     }
 
     public int getIdEmprestimo() {

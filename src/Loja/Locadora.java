@@ -1,8 +1,11 @@
 package Loja;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Vector;
+
+import Loja.Generos.*;
 import Programa.Menu;
 
 
@@ -102,14 +105,84 @@ public class Locadora {
         vendedores.add(vendedorNovo);
     }
 
-    public void addFilme(Filme filmeNovo){
-        filmes.add(filmeNovo);
+    public void addFilme(){
+        try {
+            System.out.print("Título do filme: ");
+            String titulo = sc.nextLine();
+
+            if (titulo.isBlank()) {
+                System.out.println("Título inválido!");
+                return;
+            }
+
+            System.out.print("Classificação do filme: ");
+            String classificacao = sc.nextLine();
+
+            System.out.print("Diretor do filme: ");
+            String diretor = sc.nextLine();
+
+            System.out.print("Gênero (acao, comedia, suspense,terror,romance): ");
+            String genero = sc.nextLine().toLowerCase();
+
+            System.out.print("Ano de lançamento do filme: ");
+            int ano = sc.nextInt();
+
+            System.out.print("Quantidade de cópias do filme: ");
+            int quantidade = sc.nextInt();
+            sc.nextLine();
+
+            Filme filme = null;
+
+            switch (genero) {
+                case "acao":
+                    filme = new FilmeAcao(titulo, classificacao, diretor, ano, quantidade, quantidade, genero);
+                    break;
+                case "comedia":
+                    filme = new FilmeComedia(titulo, classificacao, diretor, ano, quantidade, quantidade, genero);
+                    break;
+                case "suspense":
+                    filme = new FilmeSuspense(titulo, classificacao, diretor, ano, quantidade, quantidade, genero);
+                    break;
+                case "romance":
+                    filme = new FilmeRomance(titulo, classificacao, diretor, ano, quantidade, quantidade, genero);
+                    break;
+                case "terror":
+                    filme = new FilmeTerror(titulo, classificacao, diretor, ano, quantidade, quantidade, genero);
+                    break;
+                default:
+                    System.out.println("Gênero inválido!");
+                    return;
+            }
+
+            filmes.add(filme);
+            System.out.println("Filme inserido com sucesso!");
+
+        } catch (InputMismatchException e) {
+            System.out.println("Ano e quantidade devem ser números!");
+            sc.nextLine();
+        }
     }
 
-    public void RemoveFilme(String titulo){
+    public void RemoverFilme(){
+
+        for(Filme filme : filmes){
+            System.out.println("===================================");
+            System.out.println("ID do filme      : " + filme.getIdFilme());
+            System.out.println("Título           : " + filme.getTitulo());
+            System.out.println("Classificação    : " + filme.getClassificacao());
+            System.out.println("Diretor          : " + filme.getDiretor());
+            System.out.println("Ano de lançamento: " + filme.getAnoLancamento());
+            System.out.println("Quantidade total : " + filme.getQuantidade());
+            System.out.println("Disponíveis      : " + filme.getDisponivel());
+            filme.descricaoGenero();
+            System.out.println("===================================");
+        }
+
+        System.out.print("Informe o id do filme: ");
+        int busca = sc.nextInt();
 
         for(int i = 0; i < filmes.size(); i++){
-            if(filmes.get(i).getTitulo().equals(titulo)){
+            if(filmes.get(i).getIdFilme() == busca){
                 filmes.remove(i);
                 System.out.println("Filme removido!");
                 return;

@@ -98,57 +98,15 @@ public class Menu {
 
         switch (option){
             case 1:
-                if(clienteAtual.getMultas().isEmpty()) {
-                    String filmePesquisa;
-                    System.out.println("Filme disponíveis : ");
-
-                    for (Filme filme : locadoraAtual.getFilmes()) {
-                        System.out.println(filme.getTitulo());
-                    }
-
-                    System.out.println("Qual o título do filme que deverá ser alugado?");
-                    filmePesquisa = sc.nextLine();
-                    for (Filme filme : locadoraAtual.getFilmes()) {
-                        if (filme.getTitulo().equals(filmePesquisa)) {
-                            Emprestimo emprestimoPlaceholder = new Emprestimo(locadoraAtual, filmePesquisa);
-                            clienteAtual.addEmprestimo(emprestimoPlaceholder);
-
-                        }
-                    }
-                }
-                else{
-                    System.out.println("Existem multas não pagas!");
-                }
+                clienteAtual.alugarFilme(locadoraAtual);
                 break;
             case 2:
-                if(clienteAtual.getEmprestimos().size() != 0){
-                    System.out.println("Qual filme você deseja devolver?");
-                    for(Emprestimo emprestimo : clienteAtual.getEmprestimos()){
-                        System.out.println("ID do emprestimo : " + emprestimo.getIdEmprestimo());
-                        System.out.println("Filme emprestado : " + emprestimo.getNomeFilme());
-                        System.out.println("Data do emprestimo : " + emprestimo.getIdEmprestimo());
-                        System.out.println("Data limite : " + emprestimo.getDevolucao());
-                    }
-                }
+                clienteAtual.devolverFilme(locadoraAtual);
                 break;
 
             case 3:
-                if (clienteAtual.getMultas().size() != 0){
-                    System.out.println("As seguintes multas devem ser pagas antes de qualquer empréstimo :");
-                    for(Multa multas : clienteAtual.getMultas()){
-                        System.out.println("ID da multa : " + multas.getId());
-                        System.out.println("Valor da multa : " + multas.getValor());
-                        System.out.println("Data de inicio da multa : " + multas.getDataDeInicio());
-                    }
-                    System.out.println("Qual multa você deseja quitar?");
-                    int multaVerifica;
-                    multaVerifica = sc.nextInt();
-                    System.out.println("meu pix : 35992348448");
-
-                }
-                else{
-                    System.out.println("Sem despesas!");
-                }
+                clienteAtual.conferirMulta(locadoraAtual);
+                break;
         }
 
     }
@@ -171,79 +129,14 @@ public class Menu {
 
             switch (option) {
                 case 1:
-                    adicionarFilme();
+                    locadoraAtual.addFilme();
                     break;
                 case 2:
-                    removerFilme();
+                    locadoraAtual.RemoverFilme();
                     break;
                 default:
             }
         }
-    }
-
-    private static void adicionarFilme() {
-        try {
-            System.out.print("Título do filme: ");
-            String titulo = sc.nextLine();
-
-            if (titulo.isBlank()) {
-                System.out.println("Título inválido!");
-                return;
-            }
-
-            System.out.print("Classificação do filme: ");
-            String classificacao = sc.nextLine();
-
-            System.out.print("Diretor do filme: ");
-            String diretor = sc.nextLine();
-
-            System.out.print("Gênero (acao, comedia, suspense): ");
-            String genero = sc.nextLine().toLowerCase();
-
-            System.out.print("Ano de lançamento do filme: ");
-            int ano = sc.nextInt();
-
-            System.out.print("Quantidade de cópias do filme: ");
-            int quantidade = sc.nextInt();
-            sc.nextLine();
-
-            Filme filme = null;
-
-            switch (genero) {
-                case "acao":
-                    filme = new FilmeAcao(titulo, classificacao, diretor, ano, quantidade, quantidade, genero);
-                    break;
-                case "comedia":
-                    filme = new FilmeComedia(titulo, classificacao, diretor, ano, quantidade, quantidade, genero);
-                    break;
-                case "suspense":
-                    filme = new FilmeSuspense(titulo, classificacao, diretor, ano, quantidade, quantidade, genero);
-                    break;
-                default:
-                    System.out.println("Gênero inválido!");
-                    return;
-            }
-
-            locadoraAtual.addFilme(filme);
-            System.out.println("Filme inserido com sucesso!");
-
-        } catch (InputMismatchException e) {
-            System.out.println("Ano e quantidade devem ser números!");
-            sc.nextLine();
-        }
-    }
-
-    private static void removerFilme() {
-        System.out.print("Informe o título do filme: ");
-        String titulo = sc.nextLine();
-
-        if (titulo.isBlank()) {
-            System.out.println("Título inválido!");
-            return;
-        }
-
-        locadoraAtual.RemoveFilme(titulo);
-        System.out.println("Remoção concluída!");
     }
 
     public static int getOption() {
