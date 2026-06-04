@@ -29,9 +29,6 @@ public class Locadora {
             e.printStackTrace();
         }
     }
-    public Locadora(String nome) {
-        this.nome = nome;
-    }
 
     public boolean login(int tipo){
         while(tipo == 1){
