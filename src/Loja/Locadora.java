@@ -1,10 +1,12 @@
 package Loja;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Vector;
-
+import Sql.BD;
 import Loja.Generos.*;
 import Programa.Menu;
 
@@ -18,6 +20,14 @@ public class Locadora {
 
     public Locadora(String nome) {
         this.nome = nome;
+        try{
+            Connection bd = BD.conectar();
+            System.out.println("Conexão ao banco de dados com sucesso! ");
+        }
+        catch (SQLException e){
+            System.out.println("Erro ao conectar ao banco de dados!");
+            e.printStackTrace();
+        }
     }
 
     public boolean login(int tipo){
