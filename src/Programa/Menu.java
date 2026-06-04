@@ -12,10 +12,12 @@ public class Menu {
     private static int option;
     private static Scanner sc = new Scanner(System.in);
     private static Locadora locadoraAtual;
-    private static boolean enableOptionZero=true;
+    private static boolean enableOptionZero = true;
+
     public static void start(Locadora locadoraNova){
         locadoraAtual = locadoraNova;
-        while(true){  // ----------Colocar isso dentre de reset quando estiver na interfaçe para variar de Menu e Locadora
+        System.out.println("--- Bem vindo a " + locadoraAtual.getNome() + " ---\n");
+        while(true){
             System.out.println("--Escolha um tipo de conta--");
 
             reset();
@@ -38,6 +40,7 @@ public class Menu {
     public static void reset(){
         reset(true);
     }
+
     public static void reset(boolean optionZero){ // ---------------Metodo tbm da interface
         optionQuant = 0;
         enableOptionZero = optionZero;
@@ -88,7 +91,6 @@ public class Menu {
 
     public static LocalDate scanData() {
         while (true) {
-
             try {
                 System.out.print("Digite a data no formato AAAA-MM-DD: ");
                 return LocalDate.parse(sc.nextLine());
@@ -100,59 +102,63 @@ public class Menu {
     }
 
     public static void menuCliente(Cliente clienteAtual){
-        reset();
-        addOption("Alugar filme");
-        addOption("Devolver filme");
-        addOption("Pagar / conferir multa");
-        verificarOption();
+        meuLoop :
+        while(true) {
+            reset();
+            addOption("Voltar para o menu principal");
+            addOption("Alugar filme");
+            addOption("Devolver filme");
+            addOption("Pagar / conferir multa");
+            verificarOption();
 
-        switch (option){
-            case 1:
-                clienteAtual.alugarFilme(locadoraAtual);
-                break;
-            case 2:
-                clienteAtual.devolverFilme(locadoraAtual);
-                break;
-            case 3:
-                clienteAtual.conferirMulta(locadoraAtual);
-                break;
+            switch (option) {
+                case 1:
+                    break meuLoop;
+                case 2:
+                    clienteAtual.alugarFilme(locadoraAtual);
+                    break;
+                case 3:
+                    clienteAtual.devolverFilme(locadoraAtual);
+                    break;
+                case 4:
+                    clienteAtual.conferirMulta(locadoraAtual);
+                    break;
+            }
         }
-
     }
 
     public static void menuVendedor(Vendedor vendedorAtual){
+        meuLoop :
         while(true) {
             reset();
+            addOption("Voltar para o menu principal");
             addOption("Adicionar filme");
             addOption("Remover filme");
             if (vendedorAtual.isAdmin()) {
                 addOption("Adicionar vendedor");
                 addOption("Remover vendedor");
                 addOption("Tornar vendedor admin / remover admin");
-                System.out.println("Lista de vendedores: ");
-                for (Vendedor v : locadoraAtual.getVendedores(vendedorAtual)) {
-                    System.out.println(v.getNome());
-                }
             }
             verificarOption();
 
             switch (option) {
                 case 1:
+                    break meuLoop ;
+                case 2:
                     locadoraAtual.addFilme();
                     break;
-                case 2:
+                case 3:
                     locadoraAtual.RemoverFilme();
                     break;
-                case 3:
+                case 4:
                     locadoraAtual.addVendedor();
                     break;
-                case 4:
-                    locadoraAtual.RemoverVendedor();
-                    break;
                 case 5:
+                    locadoraAtual.RemoverVendedor(vendedorAtual);
+                    break;
+                case 6:
                     locadoraAtual.promoverVendedor();
                     break;
-                default:
             }
         }
     }

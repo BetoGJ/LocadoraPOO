@@ -3,11 +3,9 @@ package Loja.Generos;
 import Loja.Filme;
 
 public class FilmeTerror extends Filme {
-    private String genero;
 
-    public FilmeTerror(String titulo, String classificacao, String diretor, int anoLancamento, int quantidade, int disponivel, String genero) {
+    public FilmeTerror(String titulo, String classificacao, String diretor, int anoLancamento, int quantidade, int disponivel) {
         super(titulo, classificacao, diretor, anoLancamento, quantidade, disponivel);
-        this.genero = genero;
     }
 
     @Override
