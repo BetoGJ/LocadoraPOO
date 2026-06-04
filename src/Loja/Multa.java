@@ -1,9 +1,11 @@
 package Loja;
 
+import Programa.Exibir;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
-public class Multa implements Exibir{
+public class Multa implements Exibir {
     private static int numMulta = 0;
     private int id;
     private int idEmprestimo;

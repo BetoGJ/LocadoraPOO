@@ -20,13 +20,13 @@ public abstract class Conta {
     public void logar(String cpfLogin, String senhaLogin){
         if (this.cpf.equals(cpfLogin) && this.hashSenha == senhaLogin.hashCode()){
             logado = true;
-            System.out.printf("\nLogado com sucesso! Seja bem-vindo [%s]\n", nome);
+            System.out.printf("\n--Logado com sucesso! Seja bem-vindo [%s]--\n", nome);
         }
         else System.out.println("Falha no login!");
     }
 
     public void deslogar(){
-        if(logado==true){
+        if(logado){
             logado = false;
         }
     }
@@ -35,20 +35,8 @@ public abstract class Conta {
         return dataDeNascimento;
     }
 
-    public void setDataDeNascimento(LocalDate dataDeNascimento) {
-        this.dataDeNascimento = dataDeNascimento;
-    }
-
     public String getNome() {
         return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public String getCpf() {

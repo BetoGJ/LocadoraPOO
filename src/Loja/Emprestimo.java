@@ -1,5 +1,7 @@
 package Loja;
 
+import Programa.Exibir;
+
 import java.time.LocalDate;
 
 public class Emprestimo implements Exibir {

@@ -16,7 +16,8 @@ public class Menu {
 
     public static void start(Locadora locadoraNova){
         locadoraAtual = locadoraNova;
-        while(true){  // ----------Colocar isso dentre de reset quando estiver na interfaçe para variar de Menu e Locadora
+        System.out.println("--- Bem vindo a " + locadoraAtual.getNome() + " ---\n");
+        while(true){
             System.out.println("--Escolha um tipo de conta--");
 
             reset();
@@ -39,6 +40,7 @@ public class Menu {
     public static void reset(){
         reset(true);
     }
+
     public static void reset(boolean optionZero){ // ---------------Metodo tbm da interface
         optionQuant = 0;
         enableOptionZero = optionZero;
@@ -89,7 +91,6 @@ public class Menu {
 
     public static LocalDate scanData() {
         while (true) {
-
             try {
                 System.out.print("Digite a data no formato AAAA-MM-DD: ");
                 return LocalDate.parse(sc.nextLine());
@@ -137,10 +138,6 @@ public class Menu {
                 addOption("Adicionar vendedor");
                 addOption("Remover vendedor");
                 addOption("Tornar vendedor admin / remover admin");
-                System.out.println("Lista de vendedores: ");
-                for (Vendedor v : locadoraAtual.getVendedores(vendedorAtual)) {
-                    System.out.println(v.getNome());
-                }
             }
             verificarOption();
 
@@ -157,7 +154,7 @@ public class Menu {
                     locadoraAtual.addVendedor();
                     break;
                 case 5:
-                    locadoraAtual.RemoverVendedor();
+                    locadoraAtual.RemoverVendedor(vendedorAtual);
                     break;
                 case 6:
                     locadoraAtual.promoverVendedor();
