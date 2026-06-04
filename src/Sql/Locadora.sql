@@ -21,7 +21,7 @@ CREATE TABLE Filme (
     Ano INT(4),
     Diretor VARCHAR(45),
     Genero VARCHAR(45),
-    Classificacao INT(2),
+    Classificacao VARCHAR(15),
     Quantidade INT NOT NULL,
     Disponivel TINYINT NOT NULL,
     Locadora_CNPJ VARCHAR(18) NOT NULL,
@@ -99,11 +99,11 @@ INSERT INTO Locadora (CNPJ, Nome, Cidade) VALUES
     ('91.438.526/0001-42', 'Inafilmes', 'Tupaciguara');
 
 INSERT INTO Filme (Titulo, Ano, Diretor, Genero, Classificacao, Quantidade, Disponivel, Locadora_CNPJ) VALUES
-    ('O Bicho Vai Pegar', 2006, 'Roger Allers', 'Animação', 3, 10, 10, '12.345.678/0001-95'),
-    ('O Bicho Vai Pegar 2', 2008, 'Todd Wilderman', 'Animação', 3, 12, 9, '12.345.678/0001-95'),
-    ('O Bicho Vai Pegar 3', 2010, 'Cody Cameron', 'Animação', 3, 6, 3, '12.345.678/0001-95'),
-    ('Kill Bill - Volume 1', 2003, 'Quentin Tarantino', 'Ação', 18, 10, 4, '63.770.245/0001-18'),
-    ('Em Ritmo de Fuga', 2017, 'Edgar Wright', 'Ação', 16, 10, 10, '91.438.526/0001-42');
+    ('O Bicho Vai Pegar', 2006, 'Roger Allers', 'Animação', "Livre", 10, 10, '12.345.678/0001-95'),
+    ('O Bicho Vai Pegar 2', 2008, 'Todd Wilderman', 'Animação', "18", 12, 9, '12.345.678/0001-95'),
+    ('O Bicho Vai Pegar 3', 2010, 'Cody Cameron', 'Animação', "14", 6, 3, '12.345.678/0001-95'),
+    ('Kill Bill - Volume 1', 2003, 'Quentin Tarantino', 'Ação', "16", 10, 4, '63.770.245/0001-18'),
+    ('Em Ritmo de Fuga', 2017, 'Edgar Wright', 'Ação',  "Livre", 10, '91.438.526/0001-42');
 
 INSERT INTO Cliente (CPF, Nome, Data_de_nascimento, Senha) VALUES
     ('123.456.789-10', 'Luis Eduardo', '1995-03-15', '1234'),
@@ -112,12 +112,12 @@ INSERT INTO Cliente (CPF, Nome, Data_de_nascimento, Senha) VALUES
     ('852.963.741-22', 'Daenerys Targaryen', '1999-05-10', '1234'),
     ('159.357.456-33', 'Guerzoni', '1992-09-30', '1234');
 
-INSERT INTO Vendedor (CPF, Nome, Salario, Data_de_nascimento, Senha, Locadora_CNPJ) VALUES
-    ('111.222.333-44', 'João Pedro', 2500.00, '1990-02-15', '1234', '12.345.678/0001-95'),
-    ('555.666.777-88', 'Ana Clara', 3200.50, '1987-08-20', '1234', '47.892.113/0001-06'),
-    ('999.888.777-66', 'Felipe Rocha', 2800.75, '1995-11-05', '1234', '28.561.904/0001-71'),
-    ('444.555.666-77', 'Camila Martins', 3100.00, '1993-04-18', '1234', '63.770.245/0001-18'),
-    ('222.333.444-55', 'Bruno Silva', 2700.25, '1998-01-12', '1234', '91.438.526/0001-42');
+INSERT INTO Vendedor (CPF, Nome, Salario, Data_de_nascimento, Senha, Locadora_CNPJ, AdminStatus) VALUES
+    ('111.222.333-44', 'João Pedro', 2500.00, '1990-02-15', '1234', '12.345.678/0001-95', false),
+    ('555.666.777-88', 'Ana Clara', 3200.50, '1987-08-20', '1234', '47.892.113/0001-06', false),
+    ('999.888.777-66', 'Felipe Rocha', 2800.75, '1995-11-05', '1234', '28.561.904/0001-71', false),
+    ('444.555.666-77', 'Camila Martins', 3100.00, '1993-04-18', '1234', '63.770.245/0001-18', false ),
+    ('222.333.444-55', 'Bruno Silva', 2700.25, '1998-01-12', '1234', '91.438.526/0001-42', false);
 
 INSERT INTO Emprestimo
 (Data, Devolvido, Devolucao, Vendedor_CPF, Cliente_CPF, Locadora_CNPJ, Filme_Id) VALUES

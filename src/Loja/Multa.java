@@ -6,7 +6,6 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 
 public class Multa implements Exibir {
-    private static int numMulta = 0;
     private int id;
     private int idEmprestimo;
     private float valor;
@@ -39,12 +38,11 @@ public class Multa implements Exibir {
     }
 
     public Multa(int idEmprestimo, float valor, LocalDate data,String cpfUsuario) {
-        this.id = numMulta;
+        this.id = -1;
         this.idEmprestimo = idEmprestimo;
         this.valor = ChronoUnit.DAYS.between(data, LocalDate.now());
         this.dataDeInicio = data;
         this.cpfUsuario = cpfUsuario;
-        numMulta++;
     }
 
     @Override
@@ -57,6 +55,10 @@ public class Multa implements Exibir {
         if(this.dataDePagamento != null){
             System.out.println("Data de pagamento : " + this.dataDePagamento);
         }
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public LocalDate getDataDePagamento() {

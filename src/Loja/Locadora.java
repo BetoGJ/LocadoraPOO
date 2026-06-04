@@ -55,7 +55,7 @@ public class Locadora {
             e.printStackTrace();
         }
         // CLIENTES
-        sql = "SELECT CPF, Nome, Data_de_nascimento, Senha from Vendedor";
+        sql = "SELECT CPF, Nome, Data_de_nascimento, Senha from Cliente";
         try (
                 PreparedStatement st = bd.prepareStatement(sql);
                 ResultSet rs = st.executeQuery()
@@ -76,6 +76,8 @@ public class Locadora {
             System.out.println("Erro SQL");
             e.printStackTrace();
         }
+
+
     }
 
 
@@ -338,6 +340,14 @@ public class Locadora {
         Menu.verificarOption();
         if(Menu.getOption()==1) {
             vendedorAtual.setAdmin(!vendedorAtual.isAdmin());
+            String sql = "UPDATE Vendedor SET AdminStatus = ? WHERE CPF = ?";
+            try (PreparedStatement st = bd.prepareStatement(sql)) {
+                st.setBoolean(1, vendedorAtual.isAdmin());
+                st.setString(2, Menu.limparCpf(vendedorAtual.getCpf()));
+                st.executeUpdate();
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println("Status do admin ["+vendedorAtual.isAdmin()+"]: "+vendedorAtual.isAdmin());
         }
     }
@@ -406,13 +416,45 @@ public class Locadora {
                     return;
             }
 
-            filmes.add(filme);
-            System.out.println("Filme inserido com sucesso!\n");
 
+
+            String sql =
+                    "INSERT INTO Filme " +
+                            "(Titulo,Ano, Diretor, Genero, Classificacao, Quantidade, Disponivel, Locadora_CNPJ) " +
+                            "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+            try(
+                    PreparedStatement st = bd.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)
+            ){
+
+                st.setString(1, filme.getTitulo());
+                st.setInt(2, filme.getAnoLancamento());
+                st.setString(3, filme.getDiretor());
+                st.setString(4, genero);
+                st.setString(5, filme.getClassificacao());
+                st.setInt(6, filme.getQuantidade());
+                st.setInt(7, filme.getDisponivel());
+                st.setString(8, CNPJ);
+                st.executeUpdate();
+
+                try (ResultSet keys = st.getGeneratedKeys()) {
+                    if (keys.next()) {
+                        filme.setIdFilme(keys.getInt(1));
+                    }
+                }
+
+                filmes.add(filme);
+                System.out.println("Filme inserido com sucesso!");
+            }
+            catch (SQLException e) {
+                System.out.println("Erro ao inserir vendedor!");
+                e.printStackTrace();
+            }
         } catch (InputMismatchException e) {
             System.out.println("Ano e quantidade devem ser números!\n");
             sc.nextLine();
         }
+
     }
 
     public void RemoverFilme() {
@@ -434,8 +476,15 @@ public class Locadora {
 
             for (int i = 0; i < filmes.size(); i++) {
                 if (filmes.get(i).getIdFilme() == busca) {
-                    filmes.remove(i);
                     System.out.println("Filme removido!\n");
+                    String sql = "DELETE FROM Filme WHERE Id = ?";
+                    try (PreparedStatement st = bd.prepareStatement(sql)) {
+                        st.setInt(1, filmes.get(i).getIdFilme());
+                        st.executeUpdate();
+                    } catch (SQLException e) {
+                        throw new RuntimeException(e);
+                    }
+                    filmes.remove(i);
                     return;
                 }
             }
@@ -464,15 +513,27 @@ public class Locadora {
 
             for (int i = 0; i < vendedores.size(); i++) {
                 if (vendedores.get(i).getCpf().equals(busca)) {
+                    String sql = "DELETE FROM Vendedor WHERE CPF = ?";
+                    try (PreparedStatement st = bd.prepareStatement(sql)) {
+                        st.setString(1, Menu.limparCpf(vendedores.get(i).getCpf()));
+                        st.executeUpdate();
+                    } catch (SQLException e) {
+                        System.out.println("Erro ao remover vendedor do banco!");
+                        e.printStackTrace();
+                        return;
+                    }
                     vendedores.remove(i);
                     System.out.println("Vendedor removido!\n");
                     return;
                 }
             }
+
             System.out.println("Vendedor não encontrado!\n");
         } catch (InputMismatchException e) {
             System.out.println("Valor inválido inserido!\n");
         }
+
+
     }
 
     public Vector<Filme> getFilmes() {

@@ -5,7 +5,6 @@ import Programa.Exibir;
 import java.time.LocalDate;
 
 public class Emprestimo implements Exibir {
-    private static int numEmprestimo = 0;
     private int idEmprestimo;
     private LocalDate data;
     private LocalDate devolucao;
@@ -19,7 +18,7 @@ public class Emprestimo implements Exibir {
             if(filme.getTitulo().equals(nome)){
                 if(filme.getDisponivel() > 0){
                     filme.setDisponivel(filme.getDisponivel() - 1);
-                    this.idEmprestimo = numEmprestimo;
+                    this.idEmprestimo = -1;
                     this.data = LocalDate.now();
                     this.devolucao = this.data.plusDays(7);
                     this.devolvido = null;
@@ -33,7 +32,10 @@ public class Emprestimo implements Exibir {
                 break;
             }
         }
-        numEmprestimo++;
+    }
+
+    public void setIdEmprestimo(int idEmprestimo) {
+        this.idEmprestimo = idEmprestimo;
     }
 
     public int getIdEmprestimo() {

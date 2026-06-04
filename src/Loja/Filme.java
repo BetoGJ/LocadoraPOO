@@ -8,7 +8,6 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public abstract class Filme {
-    private static int numFilme = 0;
     private int idFilme;
     private String titulo;
     private String classificacao;
@@ -18,14 +17,17 @@ public abstract class Filme {
     private int disponivel;
 
     public Filme(String titulo, String classificacao, String diretor, int anoLancamento, int quantidade, int disponivel) {
-        this.idFilme = numFilme;
-        numFilme++;
+        this.idFilme = -1;
         this.titulo = titulo;
         this.classificacao = classificacao;
         this.diretor = diretor;
         this.anoLancamento = anoLancamento;
         this.quantidade = quantidade;
         this.disponivel = disponivel;
+    }
+
+    public void setIdFilme(int idFilme) {
+        this.idFilme = idFilme;
     }
 
     public int getIdFilme() {
