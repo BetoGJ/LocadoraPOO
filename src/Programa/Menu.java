@@ -44,10 +44,10 @@ public class Menu {
     public static void reset(boolean optionZero){ // ---------------Metodo tbm da interface
         optionQuant = 0;
         enableOptionZero = optionZero;
-        if(optionZero) System.out.println("[0] - Sair do Banco de Dados");
+        if(optionZero) System.out.println("[0] - Sair do programa");
     }
 
-    public static void addOption(String option){ // ------------Adicionar na interfaçe tbm
+    public static void addOption(String option){ // ------------Adicionar na interface tbm
         System.out.printf("[%d] - %s\n", ++optionQuant, option);
     }
 
@@ -55,7 +55,7 @@ public class Menu {
         return cpf.replaceAll("[.-]", "");
     }
 
-    public static void verificarOption(){ // ---------------Colocar esse metodo numa interfaçe
+    public static void verificarOption(){ // ---------------Colocar esse metodo numa interface
         while(true) {
             try {
                 System.out.print("Escolha uma opção: ");

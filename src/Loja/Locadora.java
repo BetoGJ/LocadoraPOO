@@ -56,7 +56,7 @@ public class Locadora {
             e.printStackTrace();
         }
         // CLIENTES
-        sql = "SELECT CPF, Nome, Data_de_nascimento, Senha from Cliente";
+        sql = "SELECT CPF, Nome, Data_de_nascimento, Senha from Cliente JOIN Cliente_da_locadora on Cliente.CPF=Cliente_da_locadora.Cliente_CPF WHERE Locadora_CNPJ='12.345.678/0001-95'";
         try (
                 PreparedStatement st = bd.prepareStatement(sql);
                 ResultSet rs = st.executeQuery()
