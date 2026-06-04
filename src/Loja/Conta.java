@@ -16,6 +16,12 @@ public abstract class Conta {
         this.hashSenha = senha.hashCode();
         this.dataDeNascimento = dataDeNascimento;
     }
+    public Conta(String nome, String cpf, int hashsenha, LocalDate dataDeNascimento) {
+        this.nome = nome;
+        this.cpf = cpf;
+        this.hashSenha = hashsenha;
+        this.dataDeNascimento = dataDeNascimento;
+    }
 
     public void logar(String cpfLogin, String senhaLogin){
         if (this.cpf.equals(cpfLogin) && this.hashSenha == senhaLogin.hashCode()){

@@ -12,6 +12,12 @@ public class Vendedor extends Conta{
         this.adminStatus = adminStatus;
     }
 
+    public Vendedor(String nome, String cpf, int hashsenha, LocalDate dataDeNascimento, float salario, boolean adminStatus) {
+        super(nome, cpf, hashsenha, dataDeNascimento);
+        this.salario = salario;
+        this.adminStatus = adminStatus;
+    }
+
     public boolean isAdmin(){
         return adminStatus;
     }

@@ -35,7 +35,9 @@ CREATE TABLE Vendedor (
     Salario FLOAT NOT NULL,
     Data_de_nascimento DATETIME NOT NULL,
     Senha VARCHAR(255) NOT NULL,
+    AdminStatus BOOLEAN NOT NULL,
     Locadora_CNPJ VARCHAR(18) NOT NULL,
+
 
     FOREIGN KEY (Locadora_CNPJ) REFERENCES Locadora(CNPJ)
 );

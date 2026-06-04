@@ -86,7 +86,7 @@ public class Menu {
             String scannedCPF = sc.nextLine();
 
             if (scannedCPF.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) { // Regex obrigando a sequência de 3 algarismos e ponto literal e hífen
-                return scannedCPF;
+                return limparCpf(scannedCPF);
             }
 
             System.out.println("CPF inválido.");
@@ -169,5 +169,9 @@ public class Menu {
 
     public static int getOption() {
         return option;
+    }
+
+    public static Locadora getLocadoraAtual() {
+        return locadoraAtual;
     }
 }
