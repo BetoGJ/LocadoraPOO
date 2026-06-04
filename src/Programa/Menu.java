@@ -51,6 +51,10 @@ public class Menu {
         System.out.printf("[%d] - %s\n", ++optionQuant, option);
     }
 
+    public static String limparCpf(String cpf){
+        return cpf.replaceAll("[.-]", "");
+    }
+
     public static void verificarOption(){ // ---------------Colocar esse metodo numa interfaçe
         while(true) {
             try {

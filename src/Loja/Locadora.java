@@ -1,6 +1,8 @@
 package Loja;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.InputMismatchException;
@@ -13,20 +15,53 @@ import Programa.Menu;
 
 public class Locadora {
     private final String nome;
+    private String CNPJ;
+    private String cidade;
     private Vector<Filme> filmes = new Vector<>();
     private Vector<Cliente> clientes = new Vector<>();
     private Vector<Vendedor> vendedores = new Vector<>();
     private static Scanner sc = new Scanner(System.in);
-
-    public Locadora(String nome) {
+    private String sql;
+    private Connection bd;
+    public Locadora(String nome, String CNPJ, String cidade) {
         this.nome = nome;
+        this.CNPJ = CNPJ;
+        this.cidade = cidade;
         try{
-            Connection bd = BD.conectar();
+            bd = BD.conectar();
             System.out.println("Conexão ao banco de dados com sucesso! ");
+            novaLocadoraSQL();
         }
         catch (SQLException e){
             System.out.println("Erro ao conectar ao banco de dados!");
             e.printStackTrace();
+        }
+    }
+
+    public void novaLocadoraSQL() {
+        String sql = "INSERT INTO Locadora (CNPJ, Nome, Cidade) VALUES (?, ?, ?)";
+
+        try (PreparedStatement st = bd.prepareStatement(sql)) {
+
+            st.setString(1, CNPJ);
+            st.setString(2, nome);
+            st.setString(3, cidade);
+
+            st.executeUpdate();
+
+        }
+        catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Locadora já cadastrada!");
+        }
+        catch (SQLException e) {
+            // MySQL: 1062 = duplicate entry (registro repetido)
+            if (e.getErrorCode() == 1062) {
+                System.out.println("Locadora já cadastrada!");
+            } else {
+                System.out.println("Erro ao inserir locadora. ");
+                e.printStackTrace();
+            }
+
         }
     }
 
@@ -121,8 +156,41 @@ public class Locadora {
     }
 
     public void addCliente(Cliente clienteNovo){
+
         clientes.add(clienteNovo);
+
+        String sql =
+                "INSERT INTO Cliente (CPF, Nome, Data_de_nascimento, Senha) " +
+                        "VALUES (?, ?, ?, ?)";
+
+        try(
+                PreparedStatement st = bd.prepareStatement(sql)
+        ){
+
+            st.setString(1, Menu.limparCpf(clienteNovo.getCpf()));
+            st.setString(2, clienteNovo.getNome());
+            st.setDate(3,
+                    java.sql.Date.valueOf(clienteNovo.getDataDeNascimento()));
+            st.setInt(4, clienteNovo.getHashSenha());
+
+            st.executeUpdate();
+
+            System.out.println("Cliente inserido com sucesso!");
+            }
+        catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Cliente já cadastrado!");
+        }
+        catch (SQLException e) {
+            if (e.getErrorCode() == 1062) {
+                System.out.println("Cliente já cadastrado! ");
+            }
+            else {
+                System.out.println("Erro ao inserir cliente!");
+            }
+            e.printStackTrace();
+        }
     }
+
 
     public void addVendedor(){
         try {
@@ -184,9 +252,48 @@ public class Locadora {
         }
     }
 
-    public void addVendedor(Vendedor vendedorNovo){ // Usado para facilitar a criação do primeiro vendedor
+    public void addVendedor(Vendedor vendedorNovo){
+
         vendedores.add(vendedorNovo);
+
+        String sql =
+                "INSERT INTO Vendedor " +
+                        "(CPF, Nome, Salario, Data_de_nascimento, Senha, Locadora_CNPJ) " +
+                        "VALUES (?, ?, ?, ?, ?, ?)";
+
+        try(
+                PreparedStatement st = bd.prepareStatement(sql)
+        ){
+
+            st.setString(1, Menu.limparCpf(vendedorNovo.getCpf()));
+            st.setString(2, vendedorNovo.getNome());
+            st.setFloat(3, vendedorNovo.getSalario());
+            st.setDate(4,
+                    java.sql.Date.valueOf(vendedorNovo.getDataDeNascimento()));
+            st.setInt(5, vendedorNovo.getHashSenha());
+            st.setString(6, CNPJ);
+
+            st.executeUpdate();
+
+            System.out.println("Vendedor inserido com sucesso!");
+
+        }
+        catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Vendedor já cadastrado!");
+        }
+        catch (SQLException e) {
+            if (e.getErrorCode() == 1062) {
+                System.out.println("Vendedor já cadastrado!");
+            }
+            else {
+                System.out.println("Erro ao inserir vendedor!");
+            }
+            e.printStackTrace();
+        }
     }
+
+
+
 
     public void promoverVendedor(){
         Vendedor vendedorAtual = null;

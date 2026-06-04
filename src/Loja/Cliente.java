@@ -13,6 +13,7 @@ public class Cliente extends Conta {
         super(nome, cpf, senha, dataDeNascimento);
     }
 
+
     public void addEmprestimo(Emprestimo emprestimo){
         emprestimos.add(emprestimo);
     }
@@ -129,5 +130,7 @@ public class Cliente extends Conta {
             }
         }
     }
+
+
 
 }

@@ -34,7 +34,7 @@ public abstract class Conta {
     public LocalDate getDataDeNascimento() {
         return dataDeNascimento;
     }
-
+    public String getDataDeNascimentoString() {return dataDeNascimento.toString();}
     public String getNome() {
         return nome;
     }
@@ -46,4 +46,10 @@ public abstract class Conta {
     public boolean isLogado(){
         return logado;
     }
+
+    public int getHashSenha() {
+        return hashSenha;
+    }
+
+
 }
