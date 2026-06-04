@@ -14,10 +14,9 @@ public class Menu {
     private static int optionQuant = 0;
     private static int option;
     private static Scanner sc = new Scanner(System.in);
-    private static Locadora locadoraAtual;
+    private static Locadora locadoraAtual = new Locadora("Locafilmes");
 
-    public static void start(Locadora locadoraNova){
-        locadoraAtual = locadoraNova;
+    public static void start(Locadora locadoraAtual){
         System.out.println("--Escolha um tipo de conta--"); // ----------Colocar isso dentre de reset quando estiver na interfaçe para variar de Menu e Locadora
 
         reset();
@@ -26,10 +25,6 @@ public class Menu {
         verificarOption();
 
         locadoraAtual.login(option);  // menu de login fica em Locadora
-    }
-
-    public static Locadora getLocadoraAtual() {
-        return locadoraAtual;
     }
 
     public static void reset(){ // ---------------Metodo tbm da interface
@@ -106,7 +101,6 @@ public class Menu {
             case 2:
                 clienteAtual.devolverFilme(locadoraAtual);
                 break;
-
             case 3:
                 clienteAtual.conferirMulta(locadoraAtual);
                 break;
@@ -139,6 +133,10 @@ public class Menu {
                     break;
                 case 3:
                     locadoraAtual.addVendedor();
+                    break;
+                case 4:
+                    locadoraAtual.RemoverVendedor();
+                    break;
                 default:
             }
         }

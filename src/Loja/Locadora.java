@@ -143,7 +143,7 @@ public class Locadora {
             LocalDate dataNova = Menu.scanData();
 
             System.out.print("Salario do vendedor: ");
-            Float salarioNovo = sc.nextFloat();
+            float salarioNovo = sc.nextFloat();
 
             while (salarioNovo < 0) {
                 System.out.print("Salário inválido! Insira novamente: ");         // --------Arrumar inserção de Float e de status
@@ -160,13 +160,12 @@ public class Locadora {
             System.out.println("Vendedor inserido com sucesso!\n");
 
         } catch (InputMismatchException e) {
-            System.out.println(e.getMessage());
             System.out.println("Valor inválido insirido!");
             sc.nextLine();
         }
     }
 
-    public void addVendedor(Vendedor vendedorNovo){
+    public void addVendedor(Vendedor vendedorNovo){ // Usado pra facilitar a criação do primeiro vendedor
         vendedores.add(vendedorNovo);
         System.out.println("Vendedor inserido com sucesso!\n");
     }
@@ -232,31 +231,55 @@ public class Locadora {
     public void RemoverFilme() {
 
         for (Filme filme : filmes) {
-            System.out.println("ID do filme      : " + filme.getIdFilme());
-            System.out.println("Título           : " + filme.getTitulo());
-            System.out.println("Classificação    : " + filme.getClassificacao());
-            System.out.println("Diretor          : " + filme.getDiretor());
-            System.out.println("Ano de lançamento: " + filme.getAnoLancamento());
-            System.out.println("Quantidade total : " + filme.getQuantidade());
-            System.out.println("Disponíveis      : " + filme.getDisponivel());
-            filme.descricaoGenero();
+        System.out.println("ID do filme      : " + filme.getIdFilme());
+        System.out.println("Título           : " + filme.getTitulo());
+        System.out.println("Classificação    : " + filme.getClassificacao());
+        System.out.println("Diretor          : " + filme.getDiretor());
+        System.out.println("Ano de lançamento: " + filme.getAnoLancamento());
+        System.out.println("Quantidade total : " + filme.getQuantidade());
+        System.out.println("Disponíveis      : " + filme.getDisponivel());
+        filme.descricaoGenero();
+    }
+
+        try {
+        System.out.print("Informe o id do filme: ");
+        int busca = sc.nextInt();
+        sc.nextLine();
+
+        for (int i = 0; i < filmes.size(); i++) {
+            if (filmes.get(i).getIdFilme() == busca) {
+                filmes.remove(i);
+                System.out.println("Filme removido!\n");
+                return;
+            }
+        }
+        System.out.println("Filme não encontrado!\n");
+    } catch (InputMismatchException e) {
+        System.out.println("Insira apenas numeros no id!\n");
+    }
+}
+
+    public void RemoverVendedor() {
+        for (Vendedor vendedor : vendedores) {
+            System.out.println("Nome do vendedor: " + vendedor.getNome());
+            System.out.println("CPF             : " + vendedor.getCpf());
+            System.out.println("Salário         : " + vendedor.getSalario());
         }
 
         try {
-            System.out.print("Informe o id do filme: ");
-            int busca = sc.nextInt();
-            sc.nextLine();
+            System.out.print("\nInforme o CPF do Vendedor: ");
+            String busca = Menu.scanCPF();
 
-            for (int i = 0; i < filmes.size(); i++) {
-                if (filmes.get(i).getIdFilme() == busca) {
-                    filmes.remove(i);
-                    System.out.println("Filme removido!\n");
+            for (int i = 0; i < vendedores.size(); i++) {
+                if (vendedores.get(i).getCpf().equals(busca)) {
+                    vendedores.remove(i);
+                    System.out.println("Vendedor removido!\n");
                     return;
                 }
             }
-            System.out.println("Filme não encontrado!\n");
+            System.out.println("Vendedor não encontrado!\n");
         } catch (InputMismatchException e) {
-            System.out.println("Insira apenas numeros no id!\n");
+            System.out.println("Valor inválido inserido!\n");
         }
     }
 
