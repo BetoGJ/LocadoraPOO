@@ -94,7 +94,7 @@ public class Locadora {
 
             if (tentativas == 3) {
                 System.out.println("Você errou 3 vezes consecutivas. Recomeçe o processo\n");
-                Menu.start();
+                Menu.start(this);
                 return;
             }
         }

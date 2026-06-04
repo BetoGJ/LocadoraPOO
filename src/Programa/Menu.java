@@ -14,11 +14,10 @@ public class Menu {
     private static int optionQuant = 0;
     private static int option;
     private static Scanner sc = new Scanner(System.in);
-    private static Locadora locadoraAtual = new Locadora("Locafilmes");
+    private static Locadora locadoraAtual;
 
-    public static void start(){
-        locadoraAtual.addCliente(new Cliente("Cliente1", "123.123.123-12", "senhasegura", LocalDate.parse("2000-03-02")));
-        locadoraAtual.addVendedor(new Vendedor("Vendedor1", "321.321.321-32", "senhasegura", LocalDate.parse("2001-04-04"), 1900.00f, true));
+    public static void start(Locadora locadoraNova){
+        locadoraAtual = locadoraNova;
         System.out.println("--Escolha um tipo de conta--"); // ----------Colocar isso dentre de reset quando estiver na interfaçe para variar de Menu e Locadora
 
         reset();
@@ -27,6 +26,10 @@ public class Menu {
         verificarOption();
 
         locadoraAtual.login(option);  // menu de login fica em Locadora
+    }
+
+    public static Locadora getLocadoraAtual() {
+        return locadoraAtual;
     }
 
     public static void reset(){ // ---------------Metodo tbm da interface
