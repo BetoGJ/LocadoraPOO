@@ -11,9 +11,10 @@ public class Menu {
     private static int optionQuant = 0;
     private static int option;
     private static Scanner sc = new Scanner(System.in);
-    private static Locadora locadoraAtual = new Locadora("Locafilmes");
+    private static Locadora locadoraAtual;
     private static boolean enableOptionZero=true;
-    public static void start(Locadora locadoraAtual){
+    public static void start(Locadora locadoraNova){
+        locadoraAtual = locadoraNova;
         while(true){  // ----------Colocar isso dentre de reset quando estiver na interfaçe para variar de Menu e Locadora
             System.out.println("--Escolha um tipo de conta--");
 
