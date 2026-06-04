@@ -35,7 +35,7 @@ public class Menu {
     }
 
     public static void reset(){
-        reset(false);
+        reset(true);
     }
     public static void reset(boolean optionZero){ // ---------------Metodo tbm da interface
         optionQuant = 0;
