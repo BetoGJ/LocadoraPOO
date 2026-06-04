@@ -82,9 +82,11 @@ public class Locadora {
 
                 if (tipo == 1 && contaAtual.isLogado()) {
                     Menu.menuCliente((Cliente) contaAtual);
+                    return true;
                 }
                 else if (tipo == 2 && contaAtual.isLogado()) {
                     Menu.menuVendedor((Vendedor) contaAtual);
+                    return true;
                 }
             } catch (NullPointerException e) {
                 System.out.println("Conta não encontrada!");
@@ -164,9 +166,8 @@ public class Locadora {
         }
     }
 
-    public void addVendedor(Vendedor vendedorNovo){ // Usado pra facilitar a criação do primeiro vendedor
+    public void addVendedor(Vendedor vendedorNovo){ // Usado para facilitar a criação do primeiro vendedor
         vendedores.add(vendedorNovo);
-        System.out.println("Vendedor inserido com sucesso!\n");
     }
     public void promoverVendedor(){
         Vendedor vendedorAtual = null;

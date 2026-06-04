@@ -12,7 +12,8 @@ public class Menu {
     private static int option;
     private static Scanner sc = new Scanner(System.in);
     private static Locadora locadoraAtual;
-    private static boolean enableOptionZero=true;
+    private static boolean enableOptionZero = true;
+
     public static void start(Locadora locadoraNova){
         locadoraAtual = locadoraNova;
         while(true){  // ----------Colocar isso dentre de reset quando estiver na interfaçe para variar de Menu e Locadora
@@ -100,29 +101,36 @@ public class Menu {
     }
 
     public static void menuCliente(Cliente clienteAtual){
-        reset();
-        addOption("Alugar filme");
-        addOption("Devolver filme");
-        addOption("Pagar / conferir multa");
-        verificarOption();
+        meuLoop :
+        while(true) {
+            reset();
+            addOption("Voltar para o menu principal");
+            addOption("Alugar filme");
+            addOption("Devolver filme");
+            addOption("Pagar / conferir multa");
+            verificarOption();
 
-        switch (option){
-            case 1:
-                clienteAtual.alugarFilme(locadoraAtual);
-                break;
-            case 2:
-                clienteAtual.devolverFilme(locadoraAtual);
-                break;
-            case 3:
-                clienteAtual.conferirMulta(locadoraAtual);
-                break;
+            switch (option) {
+                case 1:
+                    break meuLoop;
+                case 2:
+                    clienteAtual.alugarFilme(locadoraAtual);
+                    break;
+                case 3:
+                    clienteAtual.devolverFilme(locadoraAtual);
+                    break;
+                case 4:
+                    clienteAtual.conferirMulta(locadoraAtual);
+                    break;
+            }
         }
-
     }
 
     public static void menuVendedor(Vendedor vendedorAtual){
+        meuLoop :
         while(true) {
             reset();
+            addOption("Voltar para o menu principal");
             addOption("Adicionar filme");
             addOption("Remover filme");
             if (vendedorAtual.isAdmin()) {
@@ -138,21 +146,22 @@ public class Menu {
 
             switch (option) {
                 case 1:
+                    break meuLoop ;
+                case 2:
                     locadoraAtual.addFilme();
                     break;
-                case 2:
+                case 3:
                     locadoraAtual.RemoverFilme();
                     break;
-                case 3:
+                case 4:
                     locadoraAtual.addVendedor();
                     break;
-                case 4:
+                case 5:
                     locadoraAtual.RemoverVendedor();
                     break;
-                case 5:
+                case 6:
                     locadoraAtual.promoverVendedor();
                     break;
-                default:
             }
         }
     }
