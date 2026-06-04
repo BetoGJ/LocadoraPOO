@@ -12,7 +12,7 @@ public class Menu {
     private static int option;
     private static Scanner sc = new Scanner(System.in);
     private static Locadora locadoraAtual = new Locadora("Locafilmes");
-
+    private static boolean enableOptionZero=true;
     public static void start(Locadora locadoraAtual){
         while(true){  // ----------Colocar isso dentre de reset quando estiver na interfaçe para variar de Menu e Locadora
             System.out.println("--Escolha um tipo de conta--");
@@ -34,9 +34,13 @@ public class Menu {
         }
     }
 
-    public static void reset(){ // ---------------Metodo tbm da interface
+    public static void reset(){
+        reset(false);
+    }
+    public static void reset(boolean optionZero){ // ---------------Metodo tbm da interface
         optionQuant = 0;
-        System.out.println("[0] - Sair do Banco de Dados");
+        enableOptionZero = optionZero;
+        if(optionZero) System.out.println("[0] - Sair do Banco de Dados");
     }
 
     public static void addOption(String option){ // ------------Adicionar na interfaçe tbm
@@ -50,7 +54,7 @@ public class Menu {
                 option = sc.nextInt();
                 sc.nextLine();
 
-                if (option == 0) {
+                if (option == 0 && enableOptionZero) {
                     sc.close();
                     System.exit(0);
                 }
@@ -143,6 +147,9 @@ public class Menu {
                     break;
                 case 4:
                     locadoraAtual.RemoverVendedor();
+                    break;
+                case 5:
+                    locadoraAtual.promoverVendedor();
                     break;
                 default:
             }

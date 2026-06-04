@@ -168,6 +168,35 @@ public class Locadora {
         vendedores.add(vendedorNovo);
         System.out.println("Vendedor inserido com sucesso!\n");
     }
+    public void promoverVendedor(){
+        Vendedor vendedorAtual = null;
+        while(true){
+            vendedorAtual = (Vendedor) buscarConta(vendedores, Menu.scanCPF());
+            if(vendedorAtual==null){
+                System.out.println("CPF não encontrado! ");
+            }
+            else{
+                break;
+            }
+        }
+        Menu.reset(false);
+        if(vendedorAtual.isAdmin()){
+            System.out.println("O vendedor já é admin, deseja remover o admin?");
+
+            Menu.addOption("Sim");
+            Menu.addOption("Não");
+        }
+        else{
+            System.out.println("O vendedor não é admin, deseja promovê-lo a admin?");
+            Menu.addOption("Sim");
+            Menu.addOption("Não");
+        }
+        Menu.verificarOption();
+        if(Menu.getOption()==1) {
+            vendedorAtual.setAdmin(!vendedorAtual.isAdmin());
+            System.out.println("Status do admin ["+vendedorAtual.isAdmin()+"]: "+vendedorAtual.isAdmin());
+        }
+    }
 
     public void addFilme(){
         try {

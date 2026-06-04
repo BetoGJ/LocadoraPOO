@@ -20,11 +20,7 @@ public class Vendedor extends Conta{
         return salario;
     }
 
-    public boolean isAdminStatus() {
-        return adminStatus;
-    }
-
-    public void setAdmin(){
-        adminStatus = true;
+    public void setAdmin(boolean status){
+        adminStatus = status;
     }
 }
