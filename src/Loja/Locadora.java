@@ -76,12 +76,77 @@ public class Locadora {
             System.out.println("Erro SQL");
             e.printStackTrace();
         }
-
+        sql = "SELECT Id,Titulo,Ano,Diretor,Genero,Classificacao,Quantidade,Disponivel,Locadora_CNPJ FROM Filme WHERE Locadora_CNPJ='12.345.678/0001-95'";
+        // Filmes
+        try (PreparedStatement st = bd.prepareStatement(sql);
+             ResultSet rs = st.executeQuery()
+        ) {
+            while (rs.next()) {
+                Filme filme;
+                switch (rs.getString("Genero").toLowerCase()) {
+                    case "acao":
+                        filme = new FilmeAcao(
+                                rs.getString("Titulo"),
+                                rs.getString("Classificacao"),
+                                rs.getString("Diretor"),
+                                rs.getInt("Ano"),
+                                rs.getInt("Quantidade"),
+                                rs.getInt("Disponivel")
+                        );
+                        break;
+                    case "comedia":
+                        filme = new FilmeComedia(
+                                rs.getString("Titulo"),
+                                rs.getString("Classificacao"),
+                                rs.getString("Diretor"),
+                                rs.getInt("Ano"),
+                                rs.getInt("Quantidade"),
+                                rs.getInt("Disponivel")
+                        );
+                        break;
+                    case "suspense":
+                        filme = new FilmeSuspense(
+                                rs.getString("Titulo"),
+                                rs.getString("Classificacao"),
+                                rs.getString("Diretor"),
+                                rs.getInt("Ano"),
+                                rs.getInt("Quantidade"),
+                                rs.getInt("Disponivel")
+                        );
+                        break;
+                    case "romance":
+                        filme = new FilmeRomance(
+                                rs.getString("Titulo"),
+                                rs.getString("Classificacao"),
+                                rs.getString("Diretor"),
+                                rs.getInt("Ano"),
+                                rs.getInt("Quantidade"),
+                                rs.getInt("Disponivel")
+                        );
+                        break;
+                    case "terror":
+                        filme = new FilmeTerror(
+                                rs.getString("Titulo"),
+                                rs.getString("Classificacao"),
+                                rs.getString("Diretor"),
+                                rs.getInt("Ano"),
+                                rs.getInt("Quantidade"),
+                                rs.getInt("Disponivel")
+                        );
+                        break;
+                    default:
+                        System.out.println("Gênero desconhecido: " + rs.getString("Genero"));
+                        continue; // pula para o próximo filme
+                }
+                filme.setIdFilme(rs.getInt("Id"));
+                filmes.add(filme);
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro SQL ao carregar filmes!");
+            e.printStackTrace();
+        }
 
     }
-
-
-
 
 
     public boolean login(int tipo){
