@@ -22,7 +22,8 @@ public class Locadora {
     public Locadora() {
         bd = BD.getConexao();
         updateFromSQL();
-        System.out.print("Locadora: " + nome + "\nNome: " + nome + "\nCidade: " + cidade + "\n\n");
+        System.out.print("Locadora: " + nome + "\nNome: " + nome + "\nCidade: " + cidade + "\n");
+        System.out.println("Número de clientes: " + clientes.toArray().length);
 
     }
 
