@@ -128,7 +128,7 @@ public class Menu {
                 addOption("Adicionar vendedor");
                 addOption("Remover vendedor");
                 addOption("Tornar vendedor admin / remover admin");
-                System.out.print("Lista de vendedores: ");
+                System.out.println("Lista de vendedores: ");
                 for (Vendedor v : locadoraAtual.getVendedores(vendedorAtual)) {
                     System.out.println(v.getNome());
                 }
