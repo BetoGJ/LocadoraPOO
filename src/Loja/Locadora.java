@@ -341,10 +341,10 @@ public class Locadora {
                         }
                     }
 
-                    if (multaExistente != null) {
+                    if (multaExistente != null && multaExistente.getDataDePagamento() == null) {
                         multaExistente.setValor(valor);
-                    } else {
-                        cliente.addMulta(new Multa(emp.getIdEmprestimo(), valor, LocalDate.now()));
+                    } else if(multaExistente == null){
+                        cliente.addMulta(new Multa(emp.getIdEmprestimo(), valor, LocalDate.now(),cliente.getCpf()));
                     }
                 }
             }
