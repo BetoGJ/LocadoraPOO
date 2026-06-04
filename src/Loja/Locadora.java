@@ -254,19 +254,19 @@ public class Locadora {
 
             switch (genero) {
                 case "acao":
-                    filme = new FilmeAcao(titulo, classificacao, diretor, ano, quantidade, quantidade, genero);
+                    filme = new FilmeAcao(titulo, classificacao, diretor, ano, quantidade, quantidade);
                     break;
                 case "comedia":
-                    filme = new FilmeComedia(titulo, classificacao, diretor, ano, quantidade, quantidade, genero);
+                    filme = new FilmeComedia(titulo, classificacao, diretor, ano, quantidade, quantidade);
                     break;
                 case "suspense":
-                    filme = new FilmeSuspense(titulo, classificacao, diretor, ano, quantidade, quantidade, genero);
+                    filme = new FilmeSuspense(titulo, classificacao, diretor, ano, quantidade, quantidade);
                     break;
                 case "romance":
-                    filme = new FilmeRomance(titulo, classificacao, diretor, ano, quantidade, quantidade, genero);
+                    filme = new FilmeRomance(titulo, classificacao, diretor, ano, quantidade, quantidade);
                     break;
                 case "terror":
-                    filme = new FilmeTerror(titulo, classificacao, diretor, ano, quantidade, quantidade, genero);
+                    filme = new FilmeTerror(titulo, classificacao, diretor, ano, quantidade, quantidade);
                     break;
                 default:
                     System.out.println("Gênero inválido!");

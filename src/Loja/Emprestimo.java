@@ -19,7 +19,6 @@ public class Emprestimo implements Exibir {
             if(filme.getTitulo().equals(nome)){
                 if(filme.getDisponivel() > 0){
                     filme.setDisponivel(filme.getDisponivel() - 1);
-                    numEmprestimo++;
                     this.idEmprestimo = numEmprestimo;
                     this.data = LocalDate.now();
                     this.devolucao = this.data.plusDays(7);

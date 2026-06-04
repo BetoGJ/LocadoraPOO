@@ -88,9 +88,23 @@ public class Cliente extends Conta {
                 }
             }
             verificaFilme = sc.nextInt();
-            emprestimos.get(verificaFilme).setDevolvido(LocalDate.now());
-            System.out.println("Filme devolvido!");
-            return;
+
+            for(Emprestimo emp : emprestimos){
+                if(emp.getIdEmprestimo() == verificaFilme){
+
+                    emp.setDevolvido(LocalDate.now());
+
+                    for(Filme filme : locadoraAtual.getFilmes()){
+                        if(filme.getTitulo().equals(emp.getNomeFilme())){
+                            filme.setDisponivel(filme.getDisponivel() + 1);
+                            break;
+                        }
+                    }
+
+                    System.out.println("Filme devolvido!");
+                    return;
+                }
+            }
         }
     }
 
