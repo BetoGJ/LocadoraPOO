@@ -20,7 +20,7 @@ public class Locadora {
         this.nome = nome;
     }
 
-    public void login(int tipo){
+    public boolean login(int tipo){
         while(tipo == 1){
             Menu.reset();
             Menu.addOption("Cadastro");  // ---------Todos os 4 trocaram por métodos de uma interfaçe
@@ -93,9 +93,8 @@ public class Locadora {
             tentativas++;
 
             if (tentativas == 3) {
-                System.out.println("Você errou 3 vezes consecutivas. Recomeçe o processo\n");
-                Menu.start(this);
-                return;
+                System.out.println("Você errou 3 vezes consecutivas.");
+                return false;
             }
         }
     }

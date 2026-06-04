@@ -1,9 +1,6 @@
 package Programa;
 
 import Loja.*;
-import Loja.Generos.FilmeAcao;
-import Loja.Generos.FilmeComedia;
-import Loja.Generos.FilmeSuspense;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
@@ -17,14 +14,24 @@ public class Menu {
     private static Locadora locadoraAtual = new Locadora("Locafilmes");
 
     public static void start(Locadora locadoraAtual){
-        System.out.println("--Escolha um tipo de conta--"); // ----------Colocar isso dentre de reset quando estiver na interfaçe para variar de Menu e Locadora
+        while(true){  // ----------Colocar isso dentre de reset quando estiver na interfaçe para variar de Menu e Locadora
+            System.out.println("--Escolha um tipo de conta--");
 
-        reset();
-        addOption("Cliente");
-        addOption("Vendedor");
-        verificarOption();
+            reset();
+            addOption("Cliente");
+            addOption("Vendedor");
+            verificarOption();
 
-        locadoraAtual.login(option);  // menu de login fica em Locadora
+            if(option == 0){
+                break;
+            }
+
+            boolean loginConcluido = locadoraAtual.login(option);
+
+            if(!loginConcluido){
+                System.out.println("Reiniciando processo...\n");
+            }
+        }
     }
 
     public static void reset(){ // ---------------Metodo tbm da interface
