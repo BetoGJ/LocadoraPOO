@@ -1,7 +1,6 @@
 package Programa;
 
 import Loja.*;
-
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
@@ -42,13 +41,13 @@ public class Menu {
         reset(true);
     }
 
-    public static void reset(boolean optionZero){ // ---------------Metodo tbm da interface
+    public static void reset(boolean optionZero){
         optionQuant = 0;
         enableOptionZero = optionZero;
         if(optionZero) System.out.println("[0] - Sair do programa");
     }
 
-    public static void addOption(String option){ // ------------Adicionar na interface tbm
+    public static void addOption(String option) {
         System.out.printf("[%d] - %s\n", ++optionQuant, option);
     }
 
@@ -186,9 +185,5 @@ public class Menu {
 
     public static int getOption() {
         return option;
-    }
-
-    public static Locadora getLocadoraAtual() {
-        return locadoraAtual;
     }
 }

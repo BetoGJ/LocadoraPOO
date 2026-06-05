@@ -4,6 +4,13 @@ public class TempoSessao implements Runnable {
     private boolean ativo = true;
     private int segundos = 0;
 
+    public void encerrar() {
+        ativo = false;
+    }
+
+    public int getSegundos() {
+        return segundos;
+    }
 
     @Override
     public void run() {
@@ -19,13 +26,5 @@ public class TempoSessao implements Runnable {
                 return;
             }
         }
-    }
-
-    public void encerrar() {
-        ativo = false;
-    }
-
-    public int getSegundos() {
-        return segundos;
     }
 }
