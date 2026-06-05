@@ -109,6 +109,7 @@ public class Cliente extends Conta {
                         System.out.println("Erro ao inserir empréstimo!");
                         e.printStackTrace();
                         return;
+
                     }
 
                     this.addEmprestimo(emprestimoPlaceholder);
