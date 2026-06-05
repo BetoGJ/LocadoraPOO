@@ -5,7 +5,7 @@ import java.sql.*;
 public class BD{
     static private String url = "jdbc:mysql://localhost:3306/locadora";
     static private String usuario = "root";
-    static private String senha = "roof";      //Dependendo da senha do SQL do computador do host
+    static private String senha = "root";      //Dependendo da senha do SQL do computador do host
     static private Connection conexao = null;
 
     public static boolean conectar(){

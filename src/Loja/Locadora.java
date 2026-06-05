@@ -267,6 +267,28 @@ public class Locadora {
             else System.out.println("Erro ao inserir cliente!");
         }
     }
+    public void addVendedor(Vendedor vendedorNovo){
+        vendedores.add(vendedorNovo);
+
+        String sql = "INSERT INTO Vendedor (CPF, Nome, Salario, Data_de_nascimento, Senha, Locadora_CNPJ, AdminStatus) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try(PreparedStatement st = bd.prepareStatement(sql)){
+            st.setString(1, Menu.limparCpf(vendedorNovo.getCpf()));
+            st.setString(2, vendedorNovo.getNome());
+            st.setFloat(3, vendedorNovo.getSalario());
+            st.setDate(4, java.sql.Date.valueOf(vendedorNovo.getDataDeNascimento()));
+            st.setInt(5, vendedorNovo.getHashSenha());
+            st.setString(6, CNPJ);
+            st.setBoolean(7, vendedorNovo.isAdmin());
+            st.executeUpdate();
+            System.out.println("Vendedor inserido com sucesso!");
+        } catch (SQLIntegrityConstraintViolationException e) {
+            System.out.println("Vendedor já cadastrado!");
+        } catch (SQLException e) {
+            if (e.getErrorCode() == 1062) System.out.println("Vendedor já cadastrado!");
+            else System.out.println("Erro ao inserir vendedor!");
+        }
+    }
 
     public void addVendedor() {
         System.out.print("Nome do vendedor: ");
@@ -317,31 +339,11 @@ public class Locadora {
 
         Vendedor vendedorNovo = new Vendedor(nomeNovo, cpfNovo, senhaNova, dataNova, salarioNovo, statusNovo);
         vendedores.add(vendedorNovo);
+        addVendedor(vendedorNovo);
         System.out.println("Vendedor inserido com sucesso!\n");
     }
 
-    public void addVendedor(Vendedor vendedorNovo){
-        vendedores.add(vendedorNovo);
 
-        String sql = "INSERT INTO Vendedor (CPF, Nome, Salario, Data_de_nascimento, Senha, Locadora_CNPJ, AdminStatus) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try(PreparedStatement st = bd.prepareStatement(sql)){
-            st.setString(1, Menu.limparCpf(vendedorNovo.getCpf()));
-            st.setString(2, vendedorNovo.getNome());
-            st.setFloat(3, vendedorNovo.getSalario());
-            st.setDate(4, java.sql.Date.valueOf(vendedorNovo.getDataDeNascimento()));
-            st.setInt(5, vendedorNovo.getHashSenha());
-            st.setString(6, CNPJ);
-            st.setBoolean(7, vendedorNovo.isAdmin());
-            st.executeUpdate();
-            System.out.println("Vendedor inserido com sucesso!");
-        } catch (SQLIntegrityConstraintViolationException e) {
-            System.out.println("Vendedor já cadastrado!");
-        } catch (SQLException e) {
-            if (e.getErrorCode() == 1062) System.out.println("Vendedor já cadastrado!");
-            else System.out.println("Erro ao inserir vendedor!");
-        }
-    }
 
     public void promoverVendedor(Vendedor vendedorConta){
         Vendedor vendedorAtual = null;
