@@ -1,7 +1,6 @@
 package Loja;
 
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public abstract class Conta {
     private String nome;
@@ -41,8 +40,6 @@ public abstract class Conta {
         return dataDeNascimento;
     }
 
-    public String getDataDeNascimentoString() {return dataDeNascimento.toString();}
-
     public String getNome() {
         return nome;
     }
@@ -58,6 +55,4 @@ public abstract class Conta {
     public int getHashSenha() {
         return hashSenha;
     }
-
-
 }

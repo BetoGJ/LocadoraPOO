@@ -1,6 +1,6 @@
 package Loja;
 
-public abstract class Filme {
+public abstract class Filme implements Programa.Exibir {
     private int idFilme;
     private String titulo;
     private String classificacao;
@@ -57,4 +57,16 @@ public abstract class Filme {
 
     public abstract void descricaoGenero();
 
+    @Override
+    public void mostra() {
+        System.out.println("╔══════════════════════════════════════╗");
+        System.out.printf( "  %-36s%n", titulo);
+        System.out.println("╚══════════════════════════════════════╝");
+        System.out.println("  ID            : " + idFilme);
+        System.out.println("  Diretor       : " + diretor);
+        System.out.println("  Ano           : " + anoLancamento);
+        System.out.println("  Classificação : " + classificacao);
+        System.out.println("  Disponíveis   : " + disponivel + " / " + quantidade);
+        descricaoGenero();
+    }
 }

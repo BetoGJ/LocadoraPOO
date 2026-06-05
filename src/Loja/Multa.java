@@ -3,7 +3,6 @@ package Loja;
 import Programa.Exibir;
 
 import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
 
 public class Multa implements Exibir {
     private int id;
@@ -25,36 +24,27 @@ public class Multa implements Exibir {
         return id;
     }
 
-    public float getValor() {
-        return valor;
-    }
-
-    public LocalDate getDataDeInicio() {
-        return dataDeInicio;
-    }
-
     public Multa(LocalDate dataDeInicio) {
         this.dataDeInicio = dataDeInicio;
     }
 
-    public Multa(int idEmprestimo, float valor, LocalDate data,String cpfUsuario) {
+    public Multa(int idEmprestimo, float valor, LocalDate data, String cpfUsuario) {
         this.id = -1;
         this.idEmprestimo = idEmprestimo;
-        this.valor = ChronoUnit.DAYS.between(data, LocalDate.now());
+        this.valor = valor;
         this.dataDeInicio = data;
         this.cpfUsuario = cpfUsuario;
     }
 
     @Override
     public void mostra() {
-        System.out.println("ID da multa : " + this.id);
-        System.out.println("ID do emprestimo : " + this.idEmprestimo);
-        System.out.println("Valor da multa : " + this.valor);
-        System.out.println("Data de inicio : " + this.dataDeInicio);
-        System.out.println("CPF do usuario : " + this.cpfUsuario);
-        if(this.dataDePagamento != null){
-            System.out.println("Data de pagamento : " + this.dataDePagamento);
-        }
+        System.out.println("  ----------------------------------------");
+        System.out.println("  Multa #" + id + "  (Empréstimo #" + idEmprestimo + ")");
+        System.out.printf( "  Valor         : R$ %.2f (R$1,00 por dia)%n", valor);
+        System.out.println("  Desde         : " + dataDeInicio);
+        System.out.println("  CPF           : " + cpfUsuario);
+        if (dataDePagamento != null) System.out.println("  Pago em       : " + dataDePagamento);
+        System.out.println("  ----------------------------------------");
     }
 
     public void setId(int id) {
