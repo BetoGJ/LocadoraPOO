@@ -10,6 +10,6 @@ public class FilmeTerror extends Filme {
 
     @Override
     public void descricaoGenero() {
-        System.out.println("Embora o gênero de terror seja às vezes considerado um gênero cinematográfico mais recente, elementos do terror são há muito tempo um alicerce do cinema clássico, remontando a alguns dos primórdios — e dos dias mais assustadores — da produção cinematográfica.");
+        System.out.println("Embora o gênero de terror seja às vezes considerado um gênero cinematográfico mais recente, elementos do terror são há muito tempo um alicerce do cinema clássico, remontando a alguns dos primórdios — e dos dias mais assustadores — da produção cinematográfica.\n");
     }
 }

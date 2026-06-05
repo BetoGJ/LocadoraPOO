@@ -1,15 +1,13 @@
 package Sql;
 
 import java.sql.*;
-import java.time.LocalDate;
-import Loja.Locadora;
-import Programa.Menu;
 
 public class BD{
     static private String url = "jdbc:mysql://localhost:3306/locadora";
     static private String usuario = "root";
     static private String senha = "root";
     static private Connection conexao = null;
+
     public static Connection conectar(){
         try{
             conexao = DriverManager.getConnection(url, usuario, senha);
@@ -29,15 +27,15 @@ public class BD{
 
     public static void novaLocadoraSQL(String CNPJ, String nome, String cidade) {
         String sql = "INSERT INTO Locadora (CNPJ, Nome, Cidade) VALUES (?, ?, ?)";
+
         try (PreparedStatement st = conexao.prepareStatement(sql)) {
             st.setString(1, CNPJ);
             st.setString(2, nome);
             st.setString(3, cidade);
             st.executeUpdate();
-
         }
         catch (SQLIntegrityConstraintViolationException e) {
-            System.out.println("Locadora já cadastrada!");
+            System.out.println("Locadora já cadastrada!\n");
         }
         catch (SQLException e) {
             // MySQL: 1062 = duplicate entry (registro repetido)
@@ -47,9 +45,7 @@ public class BD{
                 System.out.println("Erro ao inserir locadora. ");
                 e.printStackTrace();
             }
-
         }
     }
-
 }
 

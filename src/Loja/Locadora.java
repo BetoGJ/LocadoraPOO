@@ -19,12 +19,12 @@ public class Locadora {
     private Vector<Vendedor> vendedores = new Vector<>();
     private static Scanner sc = new Scanner(System.in);
     public Connection bd;
+
     public Locadora() {
         bd = BD.getConexao();
         updateFromSQL();
-        System.out.print("Locadora: " + nome + "\nNome: " + nome + "\nCidade: " + cidade + "\n");
-        System.out.println("Número de clientes: " + clientes.toArray().length);
-
+        System.out.print("Locadora: " + nome + "\nCidade: " + cidade + "\n");
+        System.out.println("Número de clientes: " + clientes.toArray().length + "\n");
     }
 
     public void updateFromSQL(){
@@ -226,11 +226,10 @@ public class Locadora {
         }
     }
 
-
     public boolean login(int tipo){
         while(tipo == 1){
             Menu.reset();
-            Menu.addOption("Cadastro");  // ---------Todos os 4 trocaram por métodos de uma interface
+            Menu.addOption("Cadastro");
             Menu.addOption("Login");
             Menu.verificarOption();
 
@@ -325,14 +324,10 @@ public class Locadora {
                 "INSERT INTO Cliente (CPF, Nome, Data_de_nascimento, Senha) " +
                         "VALUES (?, ?, ?, ?)";
 
-        try(
-                PreparedStatement st = bd.prepareStatement(sql)
-        ){
-
+        try(PreparedStatement st = bd.prepareStatement(sql)) {
             st.setString(1, Menu.limparCpf(clienteNovo.getCpf()));
             st.setString(2, clienteNovo.getNome());
-            st.setDate(3,
-                    java.sql.Date.valueOf(clienteNovo.getDataDeNascimento()));
+            st.setDate(3, java.sql.Date.valueOf(clienteNovo.getDataDeNascimento()));
             st.setInt(4, clienteNovo.getHashSenha());
 
             st.executeUpdate();
@@ -363,7 +358,6 @@ public class Locadora {
             e.printStackTrace();
         }
     }
-
 
     public void addVendedor(){
         try {
@@ -398,7 +392,7 @@ public class Locadora {
             float salarioNovo = sc.nextFloat();
 
             while (salarioNovo < 0) {
-                System.out.print("Salário inválido! Insira novamente: ");         // --------Arrumar inserção de Float e de status
+                System.out.print("Salário inválido! Insira novamente: ");
                 salarioNovo = sc.nextFloat();
             }
 
@@ -465,13 +459,12 @@ public class Locadora {
         }
     }
 
-
-
-
-    public void promoverVendedor(){
+    public void promoverVendedor(Vendedor vendedorConta){
         Vendedor vendedorAtual = null;
+        String busca;
         while(true){
-            vendedorAtual = (Vendedor) buscarConta(vendedores, Menu.scanCPF());
+            busca = Menu.scanCPF();
+            vendedorAtual = (Vendedor) buscarConta(vendedores, busca);
             if(vendedorAtual==null){
                 System.out.println("CPF não encontrado! ");
             }
@@ -480,7 +473,12 @@ public class Locadora {
             }
         }
         Menu.reset(false);
-        if(vendedorAtual.isAdmin()){
+
+        if (vendedorAtual.isAdmin() && vendedorConta.getCpf().equals(busca)){
+            System.out.println("Você não pode retirar seu próprio cargo.\n");
+            return;
+        }
+        else if(vendedorAtual.isAdmin()){
             System.out.println("O vendedor já é admin, deseja remover o admin?");
 
             Menu.addOption("Sim");
@@ -491,6 +489,7 @@ public class Locadora {
             Menu.addOption("Sim");
             Menu.addOption("Não");
         }
+
         Menu.verificarOption();
         if(Menu.getOption()==1) {
             vendedorAtual.setAdmin(!vendedorAtual.isAdmin());
@@ -630,21 +629,34 @@ public class Locadora {
 
             for (int i = 0; i < filmes.size(); i++) {
                 if (filmes.get(i).getIdFilme() == busca) {
-                    System.out.println("Filme removido!\n");
+                    String checkSql = "SELECT COUNT(*) FROM emprestimo WHERE Filme_Id = ?";
+                    try (PreparedStatement checkSt = bd.prepareStatement(checkSql)) {
+                        checkSt.setInt(1, filmes.get(i).getIdFilme());
+                        ResultSet rs = checkSt.executeQuery();
+                        rs.next();
+                        if (rs.getInt(1) > 0) {
+                            System.out.println("Não é possível remover: este filme possui empréstimos registrados!\n");
+                            return;
+                        }
+                    }
+
                     String sql = "DELETE FROM Filme WHERE Id = ?";
                     try (PreparedStatement st = bd.prepareStatement(sql)) {
                         st.setInt(1, filmes.get(i).getIdFilme());
                         st.executeUpdate();
-                    } catch (SQLException e) {
-                        throw new RuntimeException(e);
                     }
+
                     filmes.remove(i);
+                    System.out.println("Filme removido!\n");
                     return;
                 }
             }
             System.out.println("Filme não encontrado!\n");
+
         } catch (InputMismatchException e) {
             System.out.println("Insira apenas numeros no id!\n");
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -681,7 +693,6 @@ public class Locadora {
                     return;
                 }
             }
-
             System.out.println("Vendedor não encontrado!\n");
         } catch (InputMismatchException e) {
             System.out.println("Valor inválido inserido!\n");

@@ -56,20 +56,20 @@ public class Menu {
         return cpf.replaceAll("[.-]", "");
     }
 
-    public static void verificarOption(){ // ---------------Colocar esse metodo numa interface
+    public static void verificarOption(){
         while(true) {
             try {
                 System.out.print("Escolha uma opção: ");
                 option = sc.nextInt();
                 sc.nextLine();
 
-                if (option == 0 && enableOptionZero) {
-                    sc.close();
-                    System.exit(0);
-                }
-                else if (option > 0 && option <= optionQuant) {
+                if (option > 0 && option <= optionQuant) {
                     System.out.println();
                     break;
+                }
+                else if (option == 0 && enableOptionZero) {
+                    sc.close();
+                    System.exit(0);
                 }
 
                 System.out.println("Escolha uma opção válida!");
@@ -107,10 +107,13 @@ public class Menu {
     }
 
     public static void menuCliente(Cliente clienteAtual){
-        meuLoop :
-        while(true) {
+        TempoSessao sessao = new TempoSessao();
+        Thread s = new Thread(sessao);
+        s.start();
+
+        while(clienteAtual.isLogado()) {
             reset();
-            addOption("Voltar para o menu principal");
+            addOption("Deslogar da conta");
             addOption("Alugar filme");
             addOption("Devolver filme");
             addOption("Pagar / conferir multa");
@@ -118,7 +121,8 @@ public class Menu {
 
             switch (option) {
                 case 1:
-                    break meuLoop;
+                    clienteAtual.deslogar();
+                    break ;
                 case 2:
                     clienteAtual.alugarFilme(locadoraAtual, locadoraAtual.bd);
                     break;
@@ -132,13 +136,19 @@ public class Menu {
                     break;
             }
         }
+        sessao.encerrar();
+        System.out.println("Tempo usando a conta de [" + clienteAtual.getNome() + "]: " + sessao.getSegundos() + " segundos.");
+        System.out.println("Retornando ao menu principal\n");
     }
 
     public static void menuVendedor(Vendedor vendedorAtual){
-        meuLoop :
-        while(true) {
+        TempoSessao sessao = new TempoSessao();
+        Thread s = new Thread(sessao);
+        s.start();
+
+        while(vendedorAtual.isLogado()) {
             reset();
-            addOption("Voltar para o menu principal");
+            addOption("Deslogar da conta");
             addOption("Adicionar filme");
             addOption("Remover filme");
             if (vendedorAtual.isAdmin()) {
@@ -150,7 +160,8 @@ public class Menu {
 
             switch (option) {
                 case 1:
-                    break meuLoop ;
+                    vendedorAtual.deslogar();
+                    break;
                 case 2:
                     locadoraAtual.addFilme();
                     break;
@@ -164,10 +175,13 @@ public class Menu {
                     locadoraAtual.RemoverVendedor(vendedorAtual);
                     break;
                 case 6:
-                    locadoraAtual.promoverVendedor();
+                    locadoraAtual.promoverVendedor(vendedorAtual);
                     break;
             }
         }
+        sessao.encerrar();
+        System.out.println("Tempo usando a conta de [" + vendedorAtual.getNome() + "]: " + sessao.getSegundos() + " segundos.");
+        System.out.println("Retornando ao menu principal\n");
     }
 
     public static int getOption() {

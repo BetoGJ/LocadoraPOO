@@ -1,12 +1,5 @@
 package Loja;
 
-import Loja.Generos.FilmeAcao;
-import Loja.Generos.FilmeComedia;
-import Loja.Generos.FilmeSuspense;
-
-import java.util.InputMismatchException;
-import java.util.Scanner;
-
 public abstract class Filme {
     private int idFilme;
     private String titulo;

@@ -10,6 +10,6 @@ public class FilmeRomance extends Filme {
 
     @Override
     public void descricaoGenero() {
-        System.out.println("Ah, o que seria da grandiosa tradição do cinema sem as inúmeras histórias de amor e namoro? Desde o surgimento das salas de cinema, o cinema tem sido um passatempo predileto para casais que buscam escapar para um mundo de romance");
+        System.out.println("Ah, o que seria da grandiosa tradição do cinema sem as inúmeras histórias de amor e namoro? Desde o surgimento das salas de cinema, o cinema tem sido um passatempo predileto para casais que buscam escapar para um mundo de romance.\n");
     }
 }

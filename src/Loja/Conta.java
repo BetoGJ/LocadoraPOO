@@ -33,14 +33,16 @@ public abstract class Conta {
 
     public void deslogar(){
         if(logado){
-            logado = false;
+            this.logado = false;
         }
     }
 
     public LocalDate getDataDeNascimento() {
         return dataDeNascimento;
     }
+
     public String getDataDeNascimentoString() {return dataDeNascimento.toString();}
+
     public String getNome() {
         return nome;
     }
