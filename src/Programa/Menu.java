@@ -17,6 +17,7 @@ public class Menu {
     public static void start(Locadora locadoraNova){
         locadoraAtual = locadoraNova;
         System.out.println("--- Bem vindo a " + locadoraAtual.getNome() + " ---\n");
+        locadoraAtual.verificaMultas();
         while(true){
             System.out.println("--Escolha um tipo de conta--");
 
@@ -119,12 +120,14 @@ public class Menu {
                 case 1:
                     break meuLoop;
                 case 2:
-                    clienteAtual.alugarFilme(locadoraAtual);
+                    clienteAtual.alugarFilme(locadoraAtual, locadoraAtual.bd);
                     break;
                 case 3:
-                    clienteAtual.devolverFilme(locadoraAtual);
+                    locadoraAtual.verificaMultas();
+                    clienteAtual.devolverFilme(locadoraAtual, locadoraAtual.bd);
                     break;
                 case 4:
+                    locadoraAtual.verificaMultas();
                     clienteAtual.conferirMulta(locadoraAtual);
                     break;
             }

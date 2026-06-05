@@ -1,8 +1,12 @@
 package Loja;
 
+import Programa.Menu;
+
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.Scanner;
 import java.util.Vector;
+
 
 public class Cliente extends Conta {
     private Vector<Emprestimo> emprestimos = new Vector<>();
@@ -33,18 +37,30 @@ public class Cliente extends Conta {
         return multas;
     }
 
-    public void pagaMulta(int id){
-        for(int i = 0; i < multas.size(); i++){
-            if(multas.get(i).getId() == id && multas.get(i).getDataDePagamento() == null){
+    public void pagaMulta(int id, Connection bd) {
+        for (int i = 0; i < multas.size(); i++) {
+            if (multas.get(i).getId() == id && multas.get(i).getDataDePagamento() == null) {
+
+                String sql = "UPDATE Multa SET DataPagamento = ? WHERE Id = ?";
+                try (PreparedStatement st = bd.prepareStatement(sql)) {
+                    st.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+                    st.setInt(2, multas.get(i).getId());
+                    st.executeUpdate();
+                } catch (SQLException e) {
+                    System.out.println("Erro ao pagar multa!");
+                    e.printStackTrace();
+                    return;
+                }
+
                 multas.get(i).setDataDePagamento(LocalDate.now());
-                System.out.println("Multa removida!");
+                System.out.println("Multa paga!");
                 return;
             }
         }
         System.out.println("Multa não encontrada!");
     }
 
-    public void alugarFilme(Locadora locadoraAtual){
+    public void alugarFilme(Locadora locadoraAtual, Connection bd) {
 
         boolean possuiMultaPendente = false;
 
@@ -66,45 +82,88 @@ public class Cliente extends Conta {
             System.out.println("Qual o título do filme que deverá ser alugado?");
             Scanner sc = new Scanner(System.in);
             filmePesquisa = sc.nextLine();
+
             for (Filme filme : locadoraAtual.getFilmes()) {
                 if (filme.getTitulo().equals(filmePesquisa)) {
-                    Emprestimo emprestimoPlaceholder = new Emprestimo(locadoraAtual, filmePesquisa,this.getCpf());
+
+                    Emprestimo emprestimoPlaceholder = new Emprestimo(locadoraAtual, filmePesquisa, this.getCpf());
+
+                    String sql = "INSERT INTO Emprestimo (Data, Devolucao, Vendedor_CPF, Cliente_CPF, Locadora_CNPJ, Filme_Id) " +
+                            "VALUES (?, ?, ?, ?, ?, ?)";
+                    try (PreparedStatement st = bd.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                        st.setDate(1, java.sql.Date.valueOf(emprestimoPlaceholder.getData()));
+                        st.setDate(2, java.sql.Date.valueOf(emprestimoPlaceholder.getDevolucao()));
+                        st.setString(3, this.getCpf());
+                        st.setString(4, Menu.limparCpf(this.getCpf()));
+                        st.setString(5, locadoraAtual.getCNPJ());
+                        st.setInt(6, filme.getIdFilme());
+                        st.executeUpdate();
+
+                        try (ResultSet keys = st.getGeneratedKeys()) {
+                            if (keys.next()) {
+                                emprestimoPlaceholder.setIdEmprestimo(keys.getInt(1));
+                            }
+                        }
+                    } catch (SQLException e) {
+                        System.out.println("Erro ao inserir empréstimo!");
+                        e.printStackTrace();
+                        return;
+                    }
+
                     this.addEmprestimo(emprestimoPlaceholder);
+                    System.out.println("Filme alugado com sucesso!");
+                    return;
                 }
             }
-        }
-        else {
+            System.out.println("Filme não encontrado!");
+        } else {
             System.out.println("Existem multas não pagas!");
         }
-
     }
 
-    public void devolverFilme(Locadora locadoraAtual){
+    public void devolverFilme(Locadora locadoraAtual, Connection bd) {
         int verificaFilme;
-        if(!this.getEmprestimos().isEmpty()){
+        if (!this.getEmprestimos().isEmpty()) {
             System.out.println("Qual filme você deseja devolver?");
-            for(int i = 0; i < emprestimos.size(); i++){
-                if(emprestimos.get(i).getDevolvido() == null) {
-                    System.out.println("ID do emprestimo : " + emprestimos.get(i).getIdEmprestimo());
-                    System.out.println("Filme emprestado : " + emprestimos.get(i).getNomeFilme());
-                    System.out.println("Data do emprestimo : " + emprestimos.get(i).getData());
-                    System.out.println("Data limite : " + emprestimos.get(i).getDevolucao());
+            for (int i = 0; i < emprestimos.size(); i++) {
+                if (emprestimos.get(i).getDevolvido() == null) {
+                    emprestimos.get(i).mostra();
                 }
             }
             verificaFilme = sc.nextInt();
 
-            for(Emprestimo emp : emprestimos){
-                if(emp.getIdEmprestimo() == verificaFilme){
+            for (Emprestimo emp : emprestimos) {
+                if (emp.getIdEmprestimo() == verificaFilme) {
 
-                    emp.setDevolvido(LocalDate.now());
+                    String sql = "UPDATE Emprestimo SET Devolvido = ? WHERE Id = ?";
+                    try (PreparedStatement st = bd.prepareStatement(sql)) {
+                        st.setDate(1, java.sql.Date.valueOf(LocalDate.now()));
+                        st.setInt(2, emp.getIdEmprestimo());
+                        st.executeUpdate();
+                    } catch (SQLException e) {
+                        System.out.println("Erro ao devolver filme!");
+                        e.printStackTrace();
+                        return;
+                    }
 
-                    for(Filme filme : locadoraAtual.getFilmes()){
-                        if(filme.getTitulo().equals(emp.getNomeFilme())){
-                            filme.setDisponivel(filme.getDisponivel() + 1);
+                    for (Filme filme : locadoraAtual.getFilmes()) {
+                        if (filme.getTitulo().equals(emp.getNomeFilme())) {
+                            sql = "UPDATE Filme SET Disponivel = ? WHERE Id = ?";
+                            try (PreparedStatement st = bd.prepareStatement(sql)) {
+                                st.setInt(1, filme.getDisponivel() + 1); // ← valor correto
+                                st.setInt(2, filme.getIdFilme());         // ← faltava
+                                st.executeUpdate();
+                            } catch (SQLException e) {
+                                System.out.println("Erro ao atualizar disponibilidade!");
+                                e.printStackTrace();
+                                return;
+                            }
+                            filme.setDisponivel(filme.getDisponivel() + 1); // memória
                             break;
                         }
                     }
 
+                    emp.setDevolvido(LocalDate.now()); // memória
                     System.out.println("Filme devolvido!");
                     return;
                 }
@@ -112,25 +171,23 @@ public class Cliente extends Conta {
         }
     }
 
-    public void conferirMulta(Locadora locadoraAtual){
-        for(Multa multa : this.getMultas()) {
+    public void conferirMulta(Locadora locadoraAtual) {
+        boolean possuiMulta = false;
+        for (Multa multa : multas) {
             if (multa.getDataDePagamento() == null) {
-                System.out.println("As seguintes multas devem ser pagas antes de qualquer empréstimo :");
-                for (Multa multas : this.getMultas()) {
-                    System.out.println("ID da multa : " + multas.getId());
-                    System.out.println("Valor da multa : " + multas.getValor());
-                    System.out.println("Data de inicio da multa : " + multas.getDataDeInicio());
-                }
-                System.out.println("Qual multa você deseja quitar?");
-                int multaVerifica;
-                Scanner sc = new Scanner(System.in);
-                multaVerifica = sc.nextInt();
-                pagaMulta(multaVerifica);
-                System.out.println("meu pix : 35992348448");
-
-            } else {
-                System.out.println("Sem despesas!");
+                possuiMulta = true;
+                break;
             }
+        }
+        if (possuiMulta) {
+            for (Multa multa : multas) {
+                if (multa.getDataDePagamento() == null) multa.mostra();
+            }
+            System.out.println("Qual multa deseja quitar?");
+            int id = new Scanner(System.in).nextInt();
+            pagaMulta(id, locadoraAtual.bd);
+        } else {
+            System.out.println("Sem despesas!");
         }
     }
 

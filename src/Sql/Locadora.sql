@@ -62,6 +62,7 @@ CREATE TABLE Multa (
     Id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     Valor FLOAT NOT NULL,
     Data DATETIME NOT NULL,
+    DataPagamento DATETIME,
     Locadora_CNPJ VARCHAR(18) NOT NULL,
     Emprestimo_Id INT NOT NULL,
 

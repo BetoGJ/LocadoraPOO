@@ -18,7 +18,7 @@ public class Locadora {
     private Vector<Cliente> clientes = new Vector<>();
     private Vector<Vendedor> vendedores = new Vector<>();
     private static Scanner sc = new Scanner(System.in);
-    private Connection bd;
+    public Connection bd;
     public Locadora() {
         bd = BD.getConexao();
         updateFromSQL();
@@ -608,9 +608,7 @@ public class Locadora {
 
     public void verificaMultas() {
         for (Cliente cliente : clientes) {
-
             for (Emprestimo emp : cliente.getEmprestimos()) {
-
                 if (emp.getDevolvido() == null && LocalDate.now().isAfter(emp.getDevolucao())) {
 
                     float valor = ChronoUnit.DAYS.between(emp.getDevolucao(), LocalDate.now());
@@ -625,8 +623,41 @@ public class Locadora {
 
                     if (multaExistente != null && multaExistente.getDataDePagamento() == null) {
                         multaExistente.setValor(valor);
-                    } else if(multaExistente == null){
-                        cliente.addMulta(new Multa(emp.getIdEmprestimo(), valor, LocalDate.now(),cliente.getCpf()));
+
+                        String sql = "UPDATE Multa SET Valor = ? WHERE Id = ?";
+                        try (PreparedStatement st = bd.prepareStatement(sql)) {
+                            st.setFloat(1, valor);
+                            st.setInt(2, multaExistente.getId());
+                            st.executeUpdate();
+                        } catch (SQLException e) {
+                            System.out.println("Erro ao atualizar multa!");
+                            e.printStackTrace();
+                        }
+
+                    } else if (multaExistente == null) {
+                        // Multa nova — INSERT e recupera o ID gerado
+                        Multa novaMulta = new Multa(emp.getIdEmprestimo(), valor, LocalDate.now(), cliente.getCpf());
+
+                        String sql = "INSERT INTO Multa (Valor, Data, Locadora_CNPJ, Emprestimo_Id) " +
+                                "VALUES (?, ?, ?, ?)";
+                        try (PreparedStatement st = bd.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+                            st.setFloat(1, valor);
+                            st.setDate(2, java.sql.Date.valueOf(LocalDate.now()));
+                            st.setString(3, CNPJ);
+                            st.setInt(4, emp.getIdEmprestimo());
+                            st.executeUpdate();
+
+                            try (ResultSet keys = st.getGeneratedKeys()) {
+                                if (keys.next()) {
+                                    novaMulta.setId(keys.getInt(1)); // ID real do banco
+                                }
+                            }
+                        } catch (SQLException e) {
+                            System.out.println("Erro ao inserir multa!");
+                            e.printStackTrace();
+                        }
+
+                        cliente.addMulta(novaMulta);
                     }
                 }
             }
@@ -635,5 +666,9 @@ public class Locadora {
 
     public String getNome() {
         return nome;
+    }
+
+    public String getCNPJ() {
+        return CNPJ;
     }
 }
