@@ -1,3 +1,8 @@
+Membros : 
+Gilberto Cezar Silveira Júnior - 2200  
+Thiago Vilela Gomes Valim - 2211
+Luís Eduardo Alves Marques - 868
+
 Uso de Inteligência Artificial no Desenvolvimento
 - Persistência com SQL
 Iniciamos implementando manualmente as operações de INSERT e UPDATE para a entidade Filme. Em seguida, utilizamos o Claude para replicar esse padrão nas demais classes do projeto, gerando as operações de banco de dados de forma consistente para todas as entidades.
