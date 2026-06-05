@@ -5,19 +5,18 @@ import java.sql.*;
 public class BD{
     static private String url = "jdbc:mysql://localhost:3306/locadora";
     static private String usuario = "root";
-    static private String senha = "root";
+    static private String senha = "roof";      //Dependendo da senha do SQL do computador do host
     static private Connection conexao = null;
 
-    public static Connection conectar(){
+    public static boolean conectar(){
         try{
             conexao = DriverManager.getConnection(url, usuario, senha);
             System.out.println("Conexão ao banco de dados com sucesso! ");
-            return conexao;
+            return true;
         }
         catch (SQLException e){
             System.out.println("Erro ao conectar ao banco de dados!");
-            e.printStackTrace();
-            return null;
+            return false;
         }
     }
 

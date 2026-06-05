@@ -3,11 +3,11 @@ package Loja;
 import java.time.LocalDate;
 
 public abstract class Conta {
-    private String nome;
-    private String cpf;
-    private int hashSenha;
-    private LocalDate dataDeNascimento;
-    private boolean logado = false;
+    protected String nome;
+    protected String cpf;
+    protected int hashSenha;
+    protected LocalDate dataDeNascimento;
+    protected boolean logado = false;
 
     public Conta(String nome, String cpf, String senha, LocalDate dataDeNascimento) {
         this.nome = nome;
@@ -15,6 +15,7 @@ public abstract class Conta {
         this.hashSenha = senha.hashCode();
         this.dataDeNascimento = dataDeNascimento;
     }
+
     public Conta(String nome, String cpf, int hashsenha, LocalDate dataDeNascimento) {
         this.nome = nome;
         this.cpf = cpf;
@@ -36,8 +37,8 @@ public abstract class Conta {
         }
     }
 
-    public LocalDate getDataDeNascimento() {
-        return dataDeNascimento;
+    public boolean isLogado(){
+        return logado;
     }
 
     public String getNome() {
@@ -48,11 +49,11 @@ public abstract class Conta {
         return cpf;
     }
 
-    public boolean isLogado(){
-        return logado;
-    }
-
     public int getHashSenha() {
         return hashSenha;
+    }
+
+    public LocalDate getDataDeNascimento() {
+        return dataDeNascimento;
     }
 }

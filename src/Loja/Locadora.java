@@ -41,7 +41,6 @@ public class Locadora {
             }
         }catch(SQLException e){
             System.out.println("Erro SQL");
-            e.printStackTrace();
         }
 
         sql = "SELECT CPF, Nome, Data_de_nascimento, Salario, AdminStatus, Senha from Vendedor WHERE Locadora_CNPJ='12.345.678/0001-95'";
@@ -53,7 +52,6 @@ public class Locadora {
             }
         }catch(SQLException e){
             System.out.println("Erro SQL");
-            e.printStackTrace();
         }
 
         sql = "SELECT Cliente.CPF, Cliente.Nome, Cliente.Data_de_nascimento, Cliente.Senha " +
@@ -72,7 +70,6 @@ public class Locadora {
             }
         } catch (SQLException e) {
             System.out.println("Erro SQL");
-            e.printStackTrace();
         }
 
         sql = "SELECT Id,Titulo,Ano,Diretor,Genero,Classificacao,Quantidade,Disponivel,Locadora_CNPJ FROM Filme WHERE Locadora_CNPJ='12.345.678/0001-95'";
@@ -105,7 +102,6 @@ public class Locadora {
             }
         } catch (SQLException e) {
             System.out.println("Erro SQL ao carregar filmes!");
-            e.printStackTrace();
         }
 
         sql = "SELECT Id, Data, Devolvido, Devolucao, Cliente_CPF, Filme_Id, NomeFilme " +
@@ -135,7 +131,6 @@ public class Locadora {
             }
         } catch (SQLException e) {
             System.out.println("Erro SQL ao carregar empréstimos!");
-            e.printStackTrace();
         }
 
         sql = "SELECT Id, Valor, Data, DataPagamento, Emprestimo_Id " +
@@ -160,7 +155,6 @@ public class Locadora {
             }
         } catch (SQLException e) {
             System.out.println("Erro SQL ao carregar multas!");
-            e.printStackTrace();
         }
     }
 
@@ -265,14 +259,12 @@ public class Locadora {
                 stVinculo.executeUpdate();
             } catch (SQLException e) {
                 System.out.println("Erro ao vincular cliente à locadora!");
-                e.printStackTrace();
             }
         } catch (SQLIntegrityConstraintViolationException e) {
             System.out.println("Cliente já cadastrado!");
         } catch (SQLException e) {
             if (e.getErrorCode() == 1062) System.out.println("Cliente já cadastrado!");
             else System.out.println("Erro ao inserir cliente!");
-            e.printStackTrace();
         }
     }
 
@@ -325,7 +317,7 @@ public class Locadora {
 
         Vendedor vendedorNovo = new Vendedor(nomeNovo, cpfNovo, senhaNova, dataNova, salarioNovo, statusNovo);
         vendedores.add(vendedorNovo);
-        System.out.println("✅ Vendedor inserido com sucesso!\n");
+        System.out.println("Vendedor inserido com sucesso!\n");
     }
 
     public void addVendedor(Vendedor vendedorNovo){
@@ -348,7 +340,6 @@ public class Locadora {
         } catch (SQLException e) {
             if (e.getErrorCode() == 1062) System.out.println("Vendedor já cadastrado!");
             else System.out.println("Erro ao inserir vendedor!");
-            e.printStackTrace();
         }
     }
 
@@ -473,10 +464,9 @@ public class Locadora {
                 if (keys.next()) filme.setIdFilme(keys.getInt(1));
             }
             filmes.add(filme);
-            System.out.println("✅ Filme inserido com sucesso!");
+            System.out.println("Filme inserido com sucesso!");
         } catch (SQLException e) {
             System.out.println("Erro ao inserir filme!");
-            e.printStackTrace();
         }
     }
 
@@ -508,10 +498,9 @@ public class Locadora {
                         st.executeUpdate();
                     }
                     filmes.remove(i);
-                    System.out.println("✅ Filme removido com sucesso!\n");
+                    System.out.println("Filme removido com sucesso!\n");
                 } catch (SQLException e) {
                     System.out.println("Erro ao remover filme do banco!\n");
-                    e.printStackTrace();
                 }
                 return;
             }
@@ -545,7 +534,6 @@ public class Locadora {
                     st.executeUpdate();
                 } catch (SQLException e) {
                     System.out.println("Erro ao remover vendedor do banco!");
-                    e.printStackTrace();
                     return;
                 }
                 vendedores.remove(i);
@@ -584,7 +572,6 @@ public class Locadora {
                             st.executeUpdate();
                         } catch (SQLException e) {
                             System.out.println("Erro ao atualizar multa!");
-                            e.printStackTrace();
                         }
                     } else if (multaExistente == null) {
                         Multa novaMulta = new Multa(emp.getIdEmprestimo(), valor, LocalDate.now(), cliente.getCpf());
@@ -600,7 +587,6 @@ public class Locadora {
                             }
                         } catch (SQLException e) {
                             System.out.println("Erro ao inserir multa!");
-                            e.printStackTrace();
                         }
                         cliente.addMulta(novaMulta);
                     }

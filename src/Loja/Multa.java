@@ -12,28 +12,36 @@ public class Multa implements Exibir {
     private LocalDate dataDePagamento;
     private String cpfUsuario;
 
-    public void setValor(float valor) {
-        this.valor = valor;
-    }
-
-    public int getIdEmprestimo() {
-        return idEmprestimo;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public Multa(LocalDate dataDeInicio) {
-        this.dataDeInicio = dataDeInicio;
-    }
-
     public Multa(int idEmprestimo, float valor, LocalDate data, String cpfUsuario) {
         this.id = -1;
         this.idEmprestimo = idEmprestimo;
         this.valor = valor;
         this.dataDeInicio = data;
         this.cpfUsuario = cpfUsuario;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getIdEmprestimo() {
+        return idEmprestimo;
+    }
+
+    public LocalDate getDataDePagamento() {
+        return dataDePagamento;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setValor(float valor) {
+        this.valor = valor;
+    }
+
+    public void setDataDePagamento(LocalDate dataDePagamento) {
+        this.dataDePagamento = dataDePagamento;
     }
 
     @Override
@@ -45,17 +53,5 @@ public class Multa implements Exibir {
         System.out.println("  CPF           : " + cpfUsuario);
         if (dataDePagamento != null) System.out.println("  Pago em       : " + dataDePagamento);
         System.out.println("  ----------------------------------------");
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public LocalDate getDataDePagamento() {
-        return dataDePagamento;
-    }
-
-    public void setDataDePagamento(LocalDate dataDePagamento) {
-        this.dataDePagamento = dataDePagamento;
     }
 }

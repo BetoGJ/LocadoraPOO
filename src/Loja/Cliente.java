@@ -16,6 +16,7 @@ public class Cliente extends Conta {
     public Cliente(String nome, String cpf, String senha, LocalDate dataDeNascimento) {
         super(nome, cpf, senha, dataDeNascimento);
     }
+
     public Cliente(String nome, String cpf, int hashsenha, LocalDate dataDeNascimento) {
         super(nome, cpf, hashsenha, dataDeNascimento);
     }

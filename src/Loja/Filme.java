@@ -1,13 +1,13 @@
 package Loja;
 
 public abstract class Filme implements Programa.Exibir {
-    private int idFilme;
-    private String titulo;
-    private String classificacao;
-    private String diretor;
-    private int anoLancamento;
-    private int quantidade;
-    private int disponivel;
+    protected int idFilme;
+    protected String titulo;
+    protected String classificacao;
+    protected String diretor;
+    protected int anoLancamento;
+    protected int quantidade;
+    protected int disponivel;
 
     public Filme(String titulo, String classificacao, String diretor, int anoLancamento, int quantidade, int disponivel) {
         this.idFilme = -1;
@@ -17,10 +17,6 @@ public abstract class Filme implements Programa.Exibir {
         this.anoLancamento = anoLancamento;
         this.quantidade = quantidade;
         this.disponivel = disponivel;
-    }
-
-    public void setIdFilme(int idFilme) {
-        this.idFilme = idFilme;
     }
 
     public int getIdFilme() {
@@ -53,6 +49,10 @@ public abstract class Filme implements Programa.Exibir {
 
     public void setDisponivel(int disponivel) {
         this.disponivel = disponivel;
+    }
+
+    public void setIdFilme(int idFilme) {
+        this.idFilme = idFilme;
     }
 
     public abstract void descricaoGenero();

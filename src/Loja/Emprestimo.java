@@ -33,14 +33,7 @@ public class Emprestimo implements Exibir {
         }
     }
 
-    public Emprestimo(
-            int idEmprestimo,
-            LocalDate data,
-            LocalDate devolucao,
-            LocalDate devolvido,
-            String cpfUsuario,
-            int idFilme
-    ) {
+    public Emprestimo(int idEmprestimo, LocalDate data, LocalDate devolucao, LocalDate devolvido, String cpfUsuario, int idFilme) {
         this.idEmprestimo = idEmprestimo;
         this.data = data;
         this.devolucao = devolucao;
@@ -48,10 +41,6 @@ public class Emprestimo implements Exibir {
         this.cpfUsuario = cpfUsuario;
         this.idFilme = idFilme;
         this.nomeFilme = "(ID " + idFilme + ")";
-    }
-
-    public void setIdEmprestimo(int idEmprestimo) {
-        this.idEmprestimo = idEmprestimo;
     }
 
     public int getIdEmprestimo() {
@@ -70,12 +59,16 @@ public class Emprestimo implements Exibir {
         return devolvido;
     }
 
+    public String getNomeFilme() {
+        return nomeFilme;
+    }
+
     public void setDevolvido(LocalDate devolvido) {
         this.devolvido = devolvido;
     }
 
-    public String getNomeFilme() {
-        return nomeFilme;
+    public void setIdEmprestimo(int idEmprestimo) {
+        this.idEmprestimo = idEmprestimo;
     }
 
     @Override

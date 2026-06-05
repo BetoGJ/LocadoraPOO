@@ -111,7 +111,7 @@ INSERT INTO Cliente (CPF, Nome, Data_de_nascimento, Senha) VALUES
     ('74185296311', 'Igor Grecco', '1988-12-01', '109322837'),
     ('85296374122', 'Daenerys Targaryen', '1999-05-10', '109322837'),
     ('15935745633', 'Guerzoni', '1992-09-30', '109322837'),
-    ('12312312312', 'Cliente1', '2000-03-02', '94254940');
+    ('12312312312', 'Cliente1', '2000-03-02', '109322837');
 
 INSERT INTO Vendedor (CPF, Nome, Salario, Data_de_nascimento, Senha, Locadora_CNPJ, AdminStatus) VALUES
     ('11122233344', 'João Pedro', 2500.00, '1990-02-15', '109322837', '12.345.678/0001-95', false),
@@ -143,7 +143,8 @@ INSERT INTO Cliente_da_Locadora (Locadora_CNPJ, Cliente_CPF) VALUES
     ('28.561.904/0001-71', '74185296311'),
     ('63.770.245/0001-18', '85296374122'),
     ('91.438.526/0001-42', '15935745633'),
-    ('12.345.678/0001-95', '74185296311');
+    ('12.345.678/0001-95', '74185296311'),
+    ('12.345.678/0001-95', '12312312312');
 
 
 
