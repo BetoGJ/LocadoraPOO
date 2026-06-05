@@ -14,8 +14,11 @@ Refinar a interface do usuário
 Remover trechos desnecessários acumulados durante o desenvolvimento
 
 - Busca Polimórfica por Vetor
-A IA orientou a criação de um vetor de Conta capaz de armazenar tanto objetos do tipo Cliente quanto Vendedor, aproveitando herança para unificar a lógica de busca entre as duas entidades.
-- Tratamento de Erros SQL
+A IA orientou a sintaxe para a criação de um vetor capaz de armazenar tanto objetos do tipo Cliente quanto Vendedor, aproveitando herança para unificar a lógica de busca entre as duas entidades (Ideia do programador).
+Vector<? extends Conta> contas
+
+- Como restringir o input de CPF para o formato padrão (Foi instruído o uso de regex)
+- Dúvidas sobre tratamento de Erros SQL (como tratar repetições no SQL)
 A IA auxiliou em dois pontos específicos:
 
 Identificar e tratar erros de duplicidade no banco de dados (ex: chave primária repetida)
