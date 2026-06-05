@@ -13,7 +13,7 @@ Melhorar a indentação e legibilidade geral do código
 Refinar a interface do usuário
 Remover trechos desnecessários acumulados durante o desenvolvimento
 
-- Busca Polimórfica por Vetor
+- Busca Polimórfica por Vetor:
 A IA orientou a sintaxe para a criação de um vetor capaz de armazenar tanto objetos do tipo Cliente quanto Vendedor, aproveitando herança para unificar a lógica de busca entre as duas entidades (Ideia do programador).
 Vector<? extends Conta> contas
 
