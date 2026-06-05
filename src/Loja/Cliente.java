@@ -48,6 +48,7 @@ public class Cliente extends Conta {
                     st.executeUpdate();
                 } catch (SQLException e) {
                     System.out.println("Erro ao pagar multa!");
+                    e.printStackTrace();
                     return;
                 }
 
@@ -106,6 +107,7 @@ public class Cliente extends Conta {
                         }
                     } catch (SQLException e) {
                         System.out.println("Erro ao inserir empréstimo!");
+                        e.printStackTrace();
                         return;
 
                     }
@@ -142,6 +144,7 @@ public class Cliente extends Conta {
                         st.executeUpdate();
                     } catch (SQLException e) {
                         System.out.println("Erro ao devolver filme!");
+                        e.printStackTrace();
                         return;
                     }
 
@@ -154,6 +157,7 @@ public class Cliente extends Conta {
                                 st.executeUpdate();
                             } catch (SQLException e) {
                                 System.out.println("Erro ao atualizar disponibilidade!");
+                                e.printStackTrace();
                                 return;
                             }
                             filme.setDisponivel(filme.getDisponivel() + 1); // memória
