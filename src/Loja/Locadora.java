@@ -2,13 +2,11 @@ package Loja;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
-import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.util.Vector;
 import Sql.BD;
 import Loja.Generos.*;
 import Programa.Menu;
-
 
 public class Locadora {
     private String nome;
@@ -267,6 +265,7 @@ public class Locadora {
             else System.out.println("Erro ao inserir cliente!");
         }
     }
+
     public void addVendedor(Vendedor vendedorNovo){
         vendedores.add(vendedorNovo);
 
@@ -342,8 +341,6 @@ public class Locadora {
         addVendedor(vendedorNovo);
         System.out.println("Vendedor inserido com sucesso!\n");
     }
-
-
 
     public void promoverVendedor(Vendedor vendedorConta){
         Vendedor vendedorAtual = null;
