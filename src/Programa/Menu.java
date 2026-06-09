@@ -52,10 +52,6 @@ public class Menu {
         System.out.printf("[%d] - %s\n", ++optionQuant, option);
     }
 
-    public static String limparCpf(String cpf){
-        return cpf.replaceAll("[.-]", "");
-    }
-
     public static void verificarOption(){
         while(true) {
             try {
@@ -87,7 +83,7 @@ public class Menu {
             String scannedCPF = sc.nextLine();
 
             if (scannedCPF.matches("\\d{3}\\.\\d{3}\\.\\d{3}-\\d{2}")) { // Regex obrigando a sequência de 3 algarismos e ponto literal e hífen
-                return limparCpf(scannedCPF);
+                return scannedCPF;
             }
 
             System.out.println("CPF inválido.");

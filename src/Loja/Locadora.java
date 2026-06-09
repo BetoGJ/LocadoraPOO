@@ -244,7 +244,7 @@ public class Locadora {
 
         String sql = "INSERT INTO Cliente (CPF, Nome, Data_de_nascimento, Senha) VALUES (?, ?, ?, ?)";
         try(PreparedStatement st = bd.prepareStatement(sql)) {
-            st.setString(1, Menu.limparCpf(clienteNovo.getCpf()));
+            st.setString(1, clienteNovo.getCpf());
             st.setString(2, clienteNovo.getNome());
             st.setDate(3, java.sql.Date.valueOf(clienteNovo.getDataDeNascimento()));
             st.setInt(4, clienteNovo.getHashSenha());
@@ -255,7 +255,7 @@ public class Locadora {
             String sqlVinculo = "INSERT INTO Cliente_da_Locadora (Locadora_CNPJ, Cliente_CPF) VALUES (?, ?)";
             try (PreparedStatement stVinculo = bd.prepareStatement(sqlVinculo)) {
                 stVinculo.setString(1, CNPJ);
-                stVinculo.setString(2, Menu.limparCpf(clienteNovo.getCpf()));
+                stVinculo.setString(2, clienteNovo.getCpf());
                 stVinculo.executeUpdate();
             } catch (SQLException e) {
                 System.out.println("Erro ao vincular cliente à locadora!");
@@ -273,7 +273,7 @@ public class Locadora {
         String sql = "INSERT INTO Vendedor (CPF, Nome, Salario, Data_de_nascimento, Senha, Locadora_CNPJ, AdminStatus) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try(PreparedStatement st = bd.prepareStatement(sql)){
-            st.setString(1, Menu.limparCpf(vendedorNovo.getCpf()));
+            st.setString(1, vendedorNovo.getCpf());
             st.setString(2, vendedorNovo.getNome());
             st.setFloat(3, vendedorNovo.getSalario());
             st.setDate(4, java.sql.Date.valueOf(vendedorNovo.getDataDeNascimento()));
@@ -375,7 +375,7 @@ public class Locadora {
             String sql = "UPDATE Vendedor SET AdminStatus = ? WHERE CPF = ?";
             try (PreparedStatement st = bd.prepareStatement(sql)) {
                 st.setBoolean(1, vendedorAtual.isAdmin());
-                st.setString(2, Menu.limparCpf(vendedorAtual.getCpf()));
+                st.setString(2, vendedorAtual.getCpf());
                 st.executeUpdate();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -532,7 +532,7 @@ public class Locadora {
             if (vendedores.get(i).getCpf().equals(busca)) {
                 String sql = "DELETE FROM Vendedor WHERE CPF = ?";
                 try (PreparedStatement st = bd.prepareStatement(sql)) {
-                    st.setString(1, Menu.limparCpf(vendedores.get(i).getCpf()));
+                    st.setString(1, vendedores.get(i).getCpf());
                     st.executeUpdate();
                 } catch (SQLException e) {
                     System.out.println("Erro ao remover vendedor do banco!");

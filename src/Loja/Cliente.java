@@ -97,7 +97,7 @@ public class Cliente extends Conta {
                 try (PreparedStatement st = bd.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                     st.setDate(1, java.sql.Date.valueOf(emprestimoPlaceholder.getData()));
                     st.setDate(2, java.sql.Date.valueOf(emprestimoPlaceholder.getDevolucao()));
-                    st.setString(3, Menu.limparCpf(this.getCpf()));
+                    st.setString(3, this.getCpf());
                     st.setString(4, locadoraAtual.getCNPJ());
                     st.setInt(5, filme.getIdFilme());
                     st.setString(6, filme.getTitulo());
