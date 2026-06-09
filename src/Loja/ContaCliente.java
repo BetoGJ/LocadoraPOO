@@ -1,23 +1,21 @@
 package Loja;
 
-import Programa.Menu;
-
 import java.sql.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Vector;
 
 
-public class Cliente extends Conta {
-    private Vector<Emprestimo> emprestimos = new Vector<>();
-    private Vector<Multa> multas = new Vector<>();
+public class ContaCliente extends Conta {
+    private ArrayList<Emprestimo> emprestimos = new ArrayList<>();
+    private ArrayList<Multa> multas = new ArrayList<>();
     Scanner sc = new Scanner(System.in);
 
-    public Cliente(String nome, String cpf, String senha, LocalDate dataDeNascimento) {
+    public ContaCliente(String nome, String cpf, String senha, LocalDate dataDeNascimento) {
         super(nome, cpf, senha, dataDeNascimento);
     }
 
-    public Cliente(String nome, String cpf, int hashsenha, LocalDate dataDeNascimento) {
+    public ContaCliente(String nome, String cpf, int hashsenha, LocalDate dataDeNascimento) {
         super(nome, cpf, hashsenha, dataDeNascimento);
     }
 
@@ -29,11 +27,11 @@ public class Cliente extends Conta {
         multas.add(multa);
     }
 
-    public Vector<Emprestimo> getEmprestimos() {
+    public ArrayList<Emprestimo> getEmprestimos() {
         return emprestimos;
     }
 
-    public Vector<Multa> getMultas() {
+    public ArrayList<Multa> getMultas() {
         return multas;
     }
 

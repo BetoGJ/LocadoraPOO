@@ -1,9 +1,6 @@
-import Loja.Cliente;
-import Loja.Vendedor;
 import Loja.Locadora;
 import Programa.Menu;
 import Sql.BD;
-import java.time.LocalDate;
 
 
 void main() {
