@@ -3,6 +3,7 @@ package Loja;
 import Programa.Exibir;
 
 import java.time.LocalDate;
+import java.util.Date;
 
 public class Emprestimo implements Exibir {
     private int idEmprestimo;
@@ -11,6 +12,7 @@ public class Emprestimo implements Exibir {
     private LocalDate devolvido;
     private String nomeFilme;
     private String cpfUsuario;
+    private int idFilme;
 
     public Emprestimo(Locadora locadora, String nome,String cpfUsuario) {
 
@@ -24,6 +26,7 @@ public class Emprestimo implements Exibir {
                     this.devolvido = null;
                     this.nomeFilme = nome;
                     this.cpfUsuario = cpfUsuario;
+                    this.idFilme = filme.getIdFilme();
 
                 }
                 else{
@@ -32,6 +35,22 @@ public class Emprestimo implements Exibir {
                 break;
             }
         }
+    }
+
+    public Emprestimo(
+            int idEmprestimo,
+            LocalDate data,
+            LocalDate devolucao,
+            LocalDate devolvido,
+            String cpfUsuario,
+            int idFilme
+    ) {
+        this.idEmprestimo = idEmprestimo;
+        this.data = data;
+        this.devolucao = devolucao;
+        this.devolvido = devolvido;
+        this.cpfUsuario = cpfUsuario;
+        this.idFilme = idFilme;
     }
 
     public void setIdEmprestimo(int idEmprestimo) {

@@ -56,8 +56,10 @@ public class Locadora {
             e.printStackTrace();
         }
         // CLIENTES
-        sql = "SELECT CPF, Nome, Data_de_nascimento, Senha from Cliente JOIN Cliente_da_locadora on Cliente.CPF=Cliente_da_locadora.Cliente_CPF WHERE Locadora_CNPJ='12.345.678/0001-95'";
-        try (
+        sql = "SELECT Cliente.CPF, Cliente.Nome, Cliente.Data_de_nascimento, Cliente.Senha " +
+                "FROM Cliente " +
+                "JOIN Cliente_da_Locadora ON Cliente.CPF = Cliente_da_Locadora.Cliente_CPF " +
+                "WHERE Cliente_da_Locadora.Locadora_CNPJ = '12.345.678/0001-95'";        try (
                 PreparedStatement st = bd.prepareStatement(sql);
                 ResultSet rs = st.executeQuery()
         ) {
@@ -146,7 +148,82 @@ public class Locadora {
             System.out.println("Erro SQL ao carregar filmes!");
             e.printStackTrace();
         }
+        // EMPRESTIMOS
+        sql = "SELECT Id, Data, Devolvido, Devolucao, Cliente_CPF, Filme_Id, NomeFilme " +
+                "FROM Emprestimo WHERE Locadora_CNPJ = '12.345.678/0001-95'";
 
+        try (PreparedStatement st = bd.prepareStatement(sql);
+             ResultSet rs = st.executeQuery()) {
+
+            while (rs.next()) {
+                String cpfCliente = rs.getString("Cliente_CPF");
+
+                for (Cliente cliente : clientes) {
+
+                    if (cliente.getCpf().equals(cpfCliente)) {
+
+                        LocalDate devolvido = null;
+
+                        if (rs.getDate("Devolvido") != null) {
+                            devolvido = rs.getDate("Devolvido").toLocalDate();
+                        }
+
+                        Emprestimo emp = new Emprestimo(
+                                rs.getInt("Id"),
+                                rs.getDate("Data").toLocalDate(),
+                                rs.getDate("Devolucao").toLocalDate(),
+                                devolvido,
+                                cpfCliente,
+                                rs.getInt("Filme_Id")
+                        );
+
+                        cliente.addEmprestimo(emp);
+                        break;
+                    }
+                }
+            }
+
+        } catch (SQLException e) {
+            System.out.println("Erro SQL ao carregar empréstimos!");
+            e.printStackTrace();
+        }
+
+        // MULTAS
+        sql = "SELECT Id, Valor, Data, DataPagamento, Emprestimo_Id " +
+                "FROM Multa WHERE Locadora_CNPJ = '12.345.678/0001-95'";
+        try (PreparedStatement st = bd.prepareStatement(sql);
+             ResultSet rs = st.executeQuery()
+        ) {
+            while (rs.next()) {
+                int idEmprestimo = rs.getInt("Emprestimo_Id");
+
+                // busca o cliente dono da multa pelo empréstimo
+                for (Cliente cliente : clientes) {
+                    for (Emprestimo emp : cliente.getEmprestimos()) {
+                        if (emp.getIdEmprestimo() == idEmprestimo) {
+
+                            Multa multa = new Multa(
+                                    idEmprestimo,
+                                    rs.getFloat("Valor"),
+                                    rs.getDate("Data").toLocalDate(),
+                                    cliente.getCpf()
+                            );
+                            multa.setId(rs.getInt("Id"));
+
+                            if (rs.getDate("DataPagamento") != null) {
+                                multa.setDataDePagamento(rs.getDate("DataPagamento").toLocalDate());
+                            }
+
+                            cliente.addMulta(multa);
+                            break;
+                        }
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro SQL ao carregar multas!");
+            e.printStackTrace();
+        }
     }
 
 
@@ -183,7 +260,7 @@ public class Locadora {
 
                 LocalDate dataNova = Menu.scanData();
                 Cliente clienteNovo = new Cliente(nomeNovo, cpfNovo, senhaNova, dataNova);
-                clientes.add(clienteNovo);
+                addCliente(clienteNovo);
             }
             else{
                 break;
@@ -261,7 +338,18 @@ public class Locadora {
             st.executeUpdate();
 
             System.out.println("Cliente inserido com sucesso!");
+            System.out.println("Cliente inserido com sucesso!");
+
+            String sqlVinculo = "INSERT INTO Cliente_da_Locadora (Locadora_CNPJ, Cliente_CPF) VALUES (?, ?)";
+            try (PreparedStatement stVinculo = bd.prepareStatement(sqlVinculo)) {
+                stVinculo.setString(1, CNPJ);
+                stVinculo.setString(2, Menu.limparCpf(clienteNovo.getCpf()));
+                stVinculo.executeUpdate();
+            } catch (SQLException e) {
+                System.out.println("Erro ao vincular cliente à locadora!");
+                e.printStackTrace();
             }
+        }
         catch (SQLIntegrityConstraintViolationException e) {
             System.out.println("Cliente já cadastrado!");
         }
